@@ -29,6 +29,10 @@ Seed titles grouped by topic
 See [the implementation guide](project/README.md) for the commands supported
 by the current code.
 
+For the partner implementing query retrieval and PageRank/TSPR, read
+[PARTNER_HANDOFF.md](PARTNER_HANDOFF.md) for the agreed inputs, data structures,
+preprocessing and weighting rules, graph conventions, and pending dependencies.
+
 ## Shared document classes
 
 The current definitions are in `project/crawler.py` and are also imported by
