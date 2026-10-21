@@ -1,0 +1,25 @@
+# Local experiments and generated outputs
+/tmp/
+/output/
+/project/data/
+
+# Proposal/report documents and document-generation utilities
+*.docx
+*.pdf
+/buildproposal.py
+/build_proposal.py
+/render_with_word.ps1
+
+# Python caches and environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
