@@ -8,9 +8,11 @@ import numpy as np
 from scipy.sparse import csr_matrix, save_npz
 
 if __package__:
-    from .crawler import Document, TOPICS
+    from .config import REVIEWED_DIR, TOPICS
+    from .crawler import Document
 else:
-    from crawler import Document, TOPICS
+    from config import REVIEWED_DIR, TOPICS
+    from crawler import Document
 
 
 def build_incidence_matrix(documents, adjacency_lists):
@@ -37,7 +39,7 @@ def build_incidence_matrix(documents, adjacency_lists):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input-dir", type=Path, default=Path(__file__).parent / "data" / "reviewed")
+    parser.add_argument("--input-dir", type=Path, default=REVIEWED_DIR)
     args = parser.parse_args()
     with (args.input_dir / "documents.jsonl").open(encoding="utf-8") as stream:
         documents = [Document(**json.loads(line)) for line in stream if line.strip()]

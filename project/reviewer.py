@@ -6,9 +6,11 @@ import json
 from pathlib import Path
 
 if __package__:
-    from .crawler import Document, TOPICS
+    from .config import CANDIDATES_DIR, REVIEWED_DIR, TOPICS
+    from .crawler import Document
 else:
-    from crawler import Document, TOPICS
+    from config import CANDIDATES_DIR, REVIEWED_DIR, TOPICS
+    from crawler import Document
 
 
 def review_documents(documents, decisions_path, *, review_again=False):
@@ -78,8 +80,8 @@ def finalize_documents(documents, adjacency_lists, decisions):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--input-dir", type=Path, default=Path(__file__).parent / "data" / "candidates")
-    parser.add_argument("--output-dir", type=Path, default=Path(__file__).parent / "data" / "reviewed")
+    parser.add_argument("--input-dir", type=Path, default=CANDIDATES_DIR)
+    parser.add_argument("--output-dir", type=Path, default=REVIEWED_DIR)
     parser.add_argument("--review-again", action="store_true", help="Revisit previously accepted/rejected articles")
     args = parser.parse_args()
     if args.input_dir.resolve() == args.output_dir.resolve():
