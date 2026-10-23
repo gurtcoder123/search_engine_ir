@@ -17,7 +17,7 @@ python -m pip install -r project/requirements.txt
 Copy-Item project/seeds.example.json project/seeds.json
 ```
 
-Edit `project/seeds.json` and put your Wikipedia titles/URLs in each topic's
+Edit `project/seeds.json` and put plain Wikipedia article titles (not URLs) in each topic's
 list. You can provide several starting points per topic. All five lists in
 the template must be filled before using it.
 
@@ -47,7 +47,9 @@ overwritten; point `--output-dir` somewhere new instead.
 
 Use `--user-agent` to provide a descriptive identifier including your contact.
 Requests are sequential, with a configurable delay and bounded retries that
-respect server backoff. `--max-links-per-page` defaults to 30 and only limits
+respect server backoff. A long server cooldown or exhausted rate-limit/load
+retries stops the whole crawl, rather than skipping ahead to another page.
+`--max-links-per-page` defaults to 30 and only limits
 which links BFS follows, not which outgoing links are recorded. Set it to 0
 to follow all eligible links.
 
@@ -112,8 +114,10 @@ by templates/navigation; we no longer apply a custom article-body HTML filter.
 this simpler current-page API mode is not an exact revision-pinned fetch.
 The saved local text and links are the frozen experimental snapshot.
 Tokenization and stemming for retrieval happen after corpus review. A page that
-cannot be fetched is recorded in `crawl_log.json` and skipped rather than ending
-the run. Use a fresh output directory for separate experiments.
+cannot be fetched for an ordinary page-specific error is recorded in
+`crawl_log.json` and skipped. Server cooldowns stop the run; partial documents
+remain in the supplied in-memory collection, but no completed export is claimed.
+Use a fresh output directory for separate experiments.
 
 ## 2. Review and label
 
@@ -142,6 +146,10 @@ Final outputs are `documents.jsonl`, `adjacency_lists.json` and
 Accepted documents keep their original document IDs and order; pages with no
 remaining links keep empty lists. Topic counts are displayed so you can aim
 for a balanced final corpus (approximately 20 articles per topic).
+The reviewer warns if fewer than 100 articles are accepted or any topic is empty.
+The reviewed manifest contains a content fingerprint covering the complete
+document records, order and internal links. Re-review that changes the corpus
+marks an existing graph manifest stale without deleting the old matrix.
 
 For other directories, use `--input-dir` and `--output-dir`.
 Programmatically, `finalize_documents(documents, adjacency_lists, decisions)`
@@ -157,7 +165,7 @@ python project/graph.py
 This reads `project/data/reviewed/` and saves:
 
 - `incidence_matrix.npz`: SciPy CSR matrix.
-- `graph_manifest.json`: final `doc_ids` and `doc_to_row`.
+- `graph_manifest.json`: final `doc_ids`, `doc_to_row`, content fingerprint and stale status.
 
 The project calls it an incidence matrix; mathematically it is a directed,
 binary adjacency matrix. Entry [i, j] is 1 when final document i links to
@@ -176,6 +184,19 @@ doc_to_row = {doc_id: row for row, doc_id in enumerate(doc_ids)}
 Build the text vocabulary, IDF and TF-IDF matrix from this same reviewed
 document collection and order. If review decisions change later, rerun graph
 construction and rebuild the text indexes/rank vectors too.
+
+Load a saved graph through the checked loader:
+
+```python
+from project.graph import load_graph
+
+adjacency_matrix = load_graph("project/data/reviewed")
+```
+
+It rejects stale graphs, changed records/links, incompatible row mappings,
+wrong matrix dimensions, and old manifests without a content fingerprint.
+Run `graph.py` again to regenerate a current graph. Bare `scipy.sparse.load_npz`
+does not perform these corpus checks. The full text-index loader is still pending.
 
 ## Offline tests
 

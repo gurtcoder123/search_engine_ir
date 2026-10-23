@@ -220,10 +220,17 @@ discussion, but the mathematical object is an adjacency matrix. Load it into
 the shared variable `adjacency_matrix`:
 
 ```python
-from scipy.sparse import load_npz
+from project.graph import load_graph
 
-adjacency_matrix = load_npz("project/data/reviewed/incidence_matrix.npz")
+adjacency_matrix = load_graph("project/data/reviewed")
 ```
+
+Use this checked loader instead of bare `load_npz`: it verifies the saved graph
+matches the current document records, labels, ordering and internal links.
+It rejects stale manifests, legacy manifests without a fingerprint, row-mapping
+mismatches and incorrect matrix dimensions. Rebuild with `project/graph.py` if
+it reports incompatibility. Re-review marks an existing graph stale when the
+corpus changes; the old matrix is preserved, not silently treated as current.
 
 The supplied matrix is **not row-normalized**. The partner handles floating
 point transition probabilities, dangling mass and ranking iterations:
@@ -263,7 +270,8 @@ Existing graph/review exports are under `project/data/reviewed/`:
   manual topic and preview.
 - `adjacency_lists.json`: source doc IDs mapped to destination doc IDs.
 - `incidence_matrix.npz`: binary CSR graph, built by `project/graph.py`.
-- `graph_manifest.json`: final `doc_ids`, `doc_to_row` and graph orientation.
+- `graph_manifest.json`: final `doc_ids`, `doc_to_row`, graph orientation,
+  `corpus_build_id` and `stale` status.
 
 The following text-index layout is the planned export under
 `project/data/index/`; it has not been generated yet:
@@ -278,6 +286,9 @@ Use JSON for mappings/counts/postings and NumPy/SciPy formats for numerical
 artifacts. Load once at application startup, not for each query. All artifacts
 must come from the same frozen reviewed corpus. A change in corpus selection
 requires rebuilding the graph, vocabulary/IDF/index and rank vectors together.
+The reviewed and graph manifests now share a fingerprint of the frozen records
+and links, not just their IDs. The future text-index exporter/loader must carry
+and check that same `corpus_build_id`; it is not implemented yet.
 
 Full text is retained on disk for reproducibility and rebuilding. Results can
 display the saved title, first-paragraph preview and URL without new API calls.

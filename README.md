@@ -9,7 +9,7 @@ Core numerical work uses NumPy and SciPy; NetworkX and Scikit-Learn are not used
 - `project/config.py`: the topic list, document-ID format and data layout.
 - `project/crawler.py`: MediaWiki JSON API collection and adjacency lists.
 - `project/reviewer.py`: console-based acceptance, rejection and manual topic labels.
-- `project/graph.py`: sparse adjacency matrix for the reviewed corpus.
+- `project/graph.py`: sparse adjacency matrix and a loader that checks it matches the reviewed corpus.
 - `project/tests/`: offline API fixtures and review-to-graph checks.
 
 Preprocessing, TF-IDF indexing, query processing, PageRank/TSPR and attack
