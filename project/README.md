@@ -34,11 +34,16 @@ still be followed as a bridge when exploring a later group's seeds.
 Every document has `topic=None`. The seed group is recorded separately in
 `discovered_topic` and is only a suggestion, not a topic assignment.
 
-For a small single-group check:
+For a small check, write a seeds file with one topic and crawl into a scratch
+directory:
 
 ```powershell
-python project/crawler.py --seed "Information retrieval" --topic technology --depth 1 --max-pages-per-topic 3 --output-dir tmp/crawl_check
+python project/crawler.py --seeds-file tmp/one_seed.json --depth 1 --max-pages-per-topic 3 --output-dir tmp/crawl_check
 ```
+
+Seed-file keys must be the five topic names from `config.py`. The crawler
+refuses to write into a directory that already holds a crawl, so nothing is
+overwritten; point `--output-dir` somewhere new instead.
 
 Use `--user-agent` to provide a descriptive identifier including your contact.
 Requests are sequential, with a configurable delay and bounded retries that
@@ -46,29 +51,39 @@ respect server backoff. `--max-links-per-page` defaults to 30 and only limits
 which links BFS follows, not which outgoing links are recorded. Set it to 0
 to follow all eligible links.
 
-The crawler returns these two objects:
+The crawler takes a shared `DocumentCollection` and fills it in place:
 
 ```python
-from project.crawler import WebCrawler
+from project.crawler import DocumentCollection, WebCrawler
 
-crawler = WebCrawler(seed_urls={
-    "technology": ["your first seed title", "your second seed URL"],
-    "science": ["your science seed"],
-})
-documents, adjacency_lists = crawler.crawl(depth=2, max_pages_per_topic=40)
+collection = DocumentCollection()
+crawler = WebCrawler(
+    document_collection=collection,
+    topics=["technology", "science"],
+    seed_topics=[["your first seed", "your second seed"], ["your science seed"]],
+    depth=2,
+    max_pages_per_topic=40,
+)
+documents, adjacency_lists = crawler.crawl()
 crawler.save("project/data/candidates")
 ```
 
-`documents` is a list of Document objects. Each includes the full article
-text, first-paragraph preview, title, URL, revision ID and raw outgoing titles.
+`topics` and `seed_topics` are parallel lists: one list of seed titles per
+topic. The collection is never cleared for you, so use a fresh one per
+experiment. Optional settings (`depth`, `request_delay`, `min_words`, ...)
+carry ordinary defaults, so passing `depth=0` means exactly that.
+
+`documents` is a list of Document objects, and the same list the collection
+holds. Each includes the full article text, first-paragraph preview, title,
+URL, revision ID and raw outgoing titles.
 
 `adjacency_lists` maps source document IDs to destination document IDs:
 
 ```python
 {
-    "wiki_101": ["wiki_202", "wiki_303"],
-    "wiki_202": [],
-    "wiki_303": ["wiki_101"],
+    "doc-101": ["doc-202", "doc-303"],
+    "doc-202": [],
+    "doc-303": ["doc-101"],
 }
 ```
 
@@ -81,9 +96,9 @@ By default, outputs go to `project/data/candidates/`:
 
 - `documents.jsonl`: complete candidate records.
 - `adjacency_lists.json`: unique internal document-to-document links.
-- `manifest.json`: candidate order, seed-group counts and review status.
-- `crawl_log.json`: collection/skip/error records.
-- `snapshots/wiki_<page_id>.json`: per-article checkpoints, enabled by the CLI.
+- `manifest.json`: candidate order, seed-group counts, crawl settings, review
+  status and a `corpus_build_id` fingerprint of this candidate set.
+- `crawl_log.json`: the pages that were skipped, and why.
 
 The crawler reads structured JSON fields directly: `extract` is plain article
 text (`explaintext=1`), `links` contains outgoing titles, and the other fields
@@ -96,9 +111,9 @@ by templates/navigation; we no longer apply a custom article-body HTML filter.
 `revision_id` records the revision metadata returned at collection time, but
 this simpler current-page API mode is not an exact revision-pinned fetch.
 The saved local text and links are the frozen experimental snapshot.
-Tokenization and stemming for retrieval happen after corpus review. Checkpoints
-preserve downloaded records on later failure; they are not an automatic
-resume cache. Use a fresh output directory for separate experiments.
+Tokenization and stemming for retrieval happen after corpus review. A page that
+cannot be fetched is recorded in `crawl_log.json` and skipped rather than ending
+the run. Use a fresh output directory for separate experiments.
 
 ## 2. Review and label
 

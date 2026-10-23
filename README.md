@@ -6,6 +6,7 @@ Core numerical work uses NumPy and SciPy; NetworkX and Scikit-Learn are not used
 
 ## Current implementation
 
+- `project/config.py`: the topic list, document-ID format and data layout.
 - `project/crawler.py`: MediaWiki JSON API collection and adjacency lists.
 - `project/reviewer.py`: console-based acceptance, rejection and manual topic labels.
 - `project/graph.py`: sparse adjacency matrix for the reviewed corpus.
@@ -45,7 +46,7 @@ One record represents one article:
 | Field | Type | Meaning |
 | --- | --- | --- |
 | `page_id` | `int` | Wikipedia's page identifier |
-| `doc_id` | `str` | Our stable ID, currently `wiki_<page_id>` |
+| `doc_id` | `str` | Our stable, opaque ID, `doc-<page_id>`; never a row index |
 | `title` | `str` | Canonical title returned by the API |
 | `url` | `str` | Link to the article |
 | `collected_at` | `str` | UTC collection timestamp |
@@ -58,58 +59,60 @@ One record represents one article:
 
 ### DocumentCollection
 
-Stores the shared `documents: list[Document]` and a set of known Wikipedia
-page IDs for deduplication. `add_document(document)` inserts a unique page;
-`get_documents()` returns the stored list.
+Stores the shared `documents: list[Document]`, keyed by Wikipedia page ID for
+deduplication. `add_document(document)` inserts a unique page and returns
+`False` if that page is already held; `get_documents()` returns the stored
+list; `get_by_page_id(page_id)` looks one up.
 
 ### WebCrawler
 
-Collects article records and preserves their outgoing links. The existing
-implementation owns its collection and exposes `crawl(...)`. The simpler
-shared-instance design agreed below is **planned, not implemented yet**.
+Collects article records and preserves their outgoing links. It takes the
+shared collection as a constructor argument and exposes `crawl()`, described
+below.
 
-## Agreed next simplification (to be implemented by Vignesh)
+## How collection works
 
-Retain the three classes above. Give `WebCrawler` the existing collection as
-a constructor argument, so other components can refer to the same object:
+`WebCrawler` receives the collection in its constructor and fills it in place,
+so every component refers to the same object:
 
 ```python
-# Proposed interface; the current crawler still uses crawl(...).
 collection = DocumentCollection()
-crawler = WebCrawler(collection, seed_titles)
-documents, adjacency_lists = crawler.run(depth=2, max_pages_per_topic=40)
+crawler = WebCrawler(
+    document_collection=collection,
+    topics=["technology", "science"],
+    seed_topics=[["your technology seed"], ["your science seed"]],
+    depth=2,
+    max_pages_per_topic=40,
+)
+documents, adjacency_lists = crawler.crawl()
 ```
 
-`seed_titles` is a dictionary with these five groups:
+`topics` and `seed_topics` are parallel lists, one seed list per topic. The CLI
+builds them from a seeds file keyed by the five topic names.
 
-```python
-seed_titles = {
-    "technology": [...],
-    "science": [...],
-    "health_and_medicine": [...],
-    "sports": [...],
-    "politics": [...],
-}
-```
+`crawl()`:
 
-The planned `run()` method:
+1. Takes one seed group at a time and starts a BFS queue with its titles.
+2. Requests plain article text, metadata and outgoing titles from the API,
+   following link continuation tokens so no batch is lost.
+3. Checks Wikipedia page IDs so the same article is never stored twice.
+4. Builds documents with `topic=None`, recording the seed group separately in
+   `discovered_topic`, and appends them to the supplied collection.
+5. Enqueues outgoing titles while below the depth limit. Every eligible link is
+   recorded whether or not BFS follows it.
+6. Stops a group at 40 new unique candidates, or when its queue is exhausted.
+7. Resolves every saved link against the collected documents and returns the
+   documents plus adjacency lists. The sparse matrix waits for manual review.
 
-1. Picks one seed group at a time and starts a BFS queue with its titles.
-2. Requests plain article text, metadata and outgoing titles from the API.
-3. Checks Wikipedia page IDs to avoid storing the same article twice.
-4. Constructs new documents with `topic=None`, recording the discovery group
-   separately, and appends them to the supplied collection.
-5. Enqueues outgoing titles when below the depth limit. Links are recorded
-   whether or not BFS eventually follows them.
-6. Stops a group after 40 new unique candidates, or when its queue is exhausted.
-7. Matches saved links to the collected documents and returns documents plus
-   adjacency lists. The sparse matrix is built only after manual review.
+The crawler keeps the supplied collection rather than replacing or clearing it,
+so use a fresh collection for a separate experiment. A per-group frontier avoids
+BFS cycles while the collection's page IDs prevent duplicates across groups. A
+page an earlier group already stored does not fill a second group's quota, but
+its outgoing links are still explored, so it can bridge two groups.
 
-The crawler must keep the supplied collection object instead of replacing or
-silently clearing it. Use a fresh collection to start a separate experiment.
-Use a per-group visited set to avoid BFS cycles, and the collection's page-ID
-set to prevent duplicates across groups. A shared page does not fill a second
-group's new-document quota, but its outgoing links may still be explored.
+Forty is a ceiling, not a guarantee: a shallow depth or a small
+`--max-links-per-page` can exhaust a group's frontier first. The crawler reports
+what each group actually collected.
 
 ## Shared graph conventions
 

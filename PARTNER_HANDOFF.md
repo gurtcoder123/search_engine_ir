@@ -44,7 +44,7 @@ from project.crawler import Document, TOPICS
 Relevant fields are:
 
 ```text
-doc_id: str                  stable project ID, e.g. wiki_14343887
+doc_id: str                  stable project ID, e.g. doc-14343887
 page_id: int                 Wikipedia page ID
 title: str                   canonical article title
 url: str                     result link
@@ -56,6 +56,11 @@ revision_id: int | None      revision metadata recorded at collection
 collected_at: str            collection timestamp
 outgoing_links: list[str]    original outgoing article titles
 ```
+
+Treat `doc_id` as an opaque string. It is deliberately our own namespace rather
+than Wikipedia's, so later synthetic documents (the Part D spam farm) can take
+IDs no real page could collide with. Never parse it and never use it as a row
+index: `doc_to_row` is the only way to find a document's row.
 
 During crawling, `topic` is always None. For the final corpus used by B/C,
 each accepted document has exactly one topic from this fixed order:
@@ -84,10 +89,9 @@ For row i, the document TF-IDF vector, graph row/column, global PageRank entry
 and each topic-rank entry must all refer to `documents[i]`. A page ID is an
 identifier, not an array index. Do not sort/reorder one artifact independently.
 
-The crawler simplification discussed in the root README will receive a shared
-`DocumentCollection` instance and expose `run(...)`. It is pending Vignesh's
-implementation. The current collector still exposes `crawl(...)`; B/C should
-depend on the final data above rather than on either crawler entry point.
+`WebCrawler` now takes a shared `DocumentCollection` in its constructor and
+exposes `crawl()`, which returns `(documents, adjacency_lists)`. B/C should
+still depend on the saved artifacts below rather than on the crawler itself.
 
 ## 3. One shared preprocessing function
 
@@ -122,14 +126,14 @@ Illustrative data (IDs and values here are examples, not measured artifacts):
 term_to_col = {"chip": 0, "comput": 1, "softwar": 2}
 
 term_counts = {
-    "wiki_101": {"chip": 3, "comput": 5},
-    "wiki_202": {"comput": 2, "softwar": 4},
+    "doc-101": {"chip": 3, "comput": 5},
+    "doc-202": {"comput": 2, "softwar": 4},
 }
 
 inverted_index = {
-    "chip": [("wiki_101", 3)],
-    "comput": [("wiki_101", 5), ("wiki_202", 2)],
-    "softwar": [("wiki_202", 4)],
+    "chip": [("doc-101", 3)],
+    "comput": [("doc-101", 5), ("doc-202", 2)],
+    "softwar": [("doc-202", 4)],
 }
 ```
 
