@@ -1,1 +1,1 @@
-"""Wikipedia collection, review, graph and text-index pipeline (Part A)."""
+"""Small Wikipedia search engine with TF-IDF and topic-sensitive ranking."""

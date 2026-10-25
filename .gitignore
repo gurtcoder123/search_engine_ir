@@ -2,6 +2,8 @@
 /tmp/
 /output/
 /project/data/
+/project/Pre-Processing/
+/project/collection/seeds.json
 
 # Proposal/report documents and document-generation utilities
 *.docx

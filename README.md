@@ -1,144 +1,136 @@
 # Wikipedia Search Engine — Group 17
 
-Information Retrieval course project: implement Topic-Sensitive PageRank from
-first principles and evaluate how a synthetic spam farm affects retrieval.
-Core numerical work uses NumPy and SciPy; NetworkX and Scikit-Learn are not used.
+Information Retrieval course project using Topic-Sensitive PageRank.
+TF-IDF retrieval, unigram query-topic matching and TSPR are implemented.
+Clean-data preliminary evaluation is implemented; adversarial testing remains.
+
+## Project layout
+
+~~~text
+project/
+  collection/       # Wikipedia crawler, reviewer and seed example
+  indexing/         # Tokenization, stop words, inverted index and TF-IDF
+  ranking/          # Unigram topic model and sparse PageRank/TSPR
+  tests/            # Offline unit and integration tests
+  config.py         # Shared topics and local data paths
+  preprocess.py     # Build all offline search artifacts
+  search.py         # Interactive search
+  evaluate.py       # Evaluate query-specific relevance judgments
+  requirements.txt
+docs/
+  IMPLEMENTATION.md
+  PARTNER_HANDOFF.md
+~~~
+
+## Quick start
+
+Run these commands from the repository root:
+
+~~~powershell
+python -m pip install -r project/requirements.txt
+Copy-Item project/collection/seeds.example.json project/collection/seeds.json
+python -m project.collection.crawler
+python -m project.collection.reviewer
+python -m project.preprocess
+python -m project.search --mode tspr
+~~~
+
+Edit the local seeds.json before crawling. Do not copy the example over an
+existing seed file unless you intend to replace it. seeds.json is ignored;
+the example is versioned. Review/approve articles before preprocessing.
+The existing direct entry points also work, such as python project/search.py.
+After this reorganization, the crawler/reviewer are inside collection/ rather
+than directly inside project/.
+
+For redirected output on Windows, use UTF-8 mode to display article text with
+Greek or other non-ASCII characters: python -X utf8 -m project.search --mode tspr.
 
 ## Current implementation
 
-- `project/config.py`: the topic list, document-ID format and data layout.
-- `project/crawler.py`: MediaWiki JSON API collection and adjacency lists.
-- `project/reviewer.py`: console-based acceptance, rejection and manual topic labels.
-- `project/graph.py`: sparse adjacency matrix and a loader that checks it matches the reviewed corpus.
-- `project/tests/`: offline API fixtures and review-to-graph checks.
+- project/collection/crawler.py: Document, a shared DocumentCollection, and WebCrawler.
+  The crawler has request(), crawl(), reset() and save().
+- project/collection/reviewer.py: inspect saved previews and known incoming/outgoing links;
+  manually approve/reject articles and assign topics.
+- project/config.py: topic names and the local storage location.
+- project/indexing/normalize.py: simple shared tokenization and separate token JSON files
+  for approved articles, using NLTK's PorterStemmer for English words.
+- project/indexing/indexer.py: inverted postings, raw term counts per document and
+  document frequencies, saved as plain JSON.
+- project/indexing/tfidf.py: log-TF/IDF weighting and an L2-normalized SciPy CSR
+  document-term matrix, with saved vocabulary and document order.
+- project/ranking/topic_model.py: aggregate raw word counts by manual topic and estimate
+  query-topic probabilities with a smoothed unigram model.
+- project/ranking/tspr.py: sparse global PageRank and five topic-biased rank vectors.
+- project/preprocess.py: run all offline steps after review; save into Index/.
+- project/search.py: load artifacts once, union postings and rank results with
+  TF-IDF, global PageRank or query-weighted TSPR.
+- project/evaluate.py: Precision@K, Recall@K, F1@K, query latency and peak traced
+  allocations from explicit query-specific relevance judgments.
+- project/tests/: offline collection, persistence and reviewer tests.
 
-Preprocessing, TF-IDF indexing, query processing, PageRank/TSPR and attack
-evaluation are still upcoming. This repository does not yet contain a complete
-search engine or measured retrieval results.
+The crawler/reviewer do not construct a graph. tspr.py builds its own internal
+sparse link matrix from approved articles' saved outgoing titles; graph.py and
+the earlier graph exports remain removed. No NetworkX or Scikit-Learn is used.
 
-The intended data flow is:
+## Workflow
 
-```text
-Seed titles grouped by topic
-    -> BFS collection: documents + adjacency lists
-    -> manual review and topic assignment
-    -> final corpus + filtered adjacency lists
-    -> sparse graph and text indexes
-    -> ranking, retrieval and attack evaluation
-```
+1. Supply Wikipedia seed titles for the five topic groups.
+2. Crawl up to 40 new pages per seed group with bounded BFS.
+3. Save each article as JSON, plus Document_Collection.json.
+4. Manually review articles; save approval/topic in both copies.
+5. Normalize and index only records with approved exactly true.
+6. Run python -m project.preprocess to build the index, TF-IDF, topic model and ranks.
+7. Run python -m project.search --mode tspr for repeated queries.
+   Use --mode tfidf or --mode pagerank for baselines.
 
-See [the implementation guide](project/README.md) for the commands supported
-by the current code.
+All five topics need at least one reviewed, approved article. The course corpus
+requires at least 100 approved articles, not merely 100 collected candidates.
 
-For the partner implementing query retrieval and PageRank/TSPR, read
-[PARTNER_HANDOFF.md](PARTNER_HANDOFF.md) for the agreed inputs, data structures,
-preprocessing and weighting rules, graph conventions, and pending dependencies.
+By default BFS follows at most five new links per page to depth three (seed
+depth is zero). It saves **all** outgoing article titles returned by the API,
+including visited and unfollowed targets. Already-collected pages are not
+expanded again. Forty is a ceiling, not a guaranteed final topic count.
 
-## Shared document classes
+There is no discovered_topic field. Seed groups control collection quotas;
+they do not label documents. A new document's topic and approved are null.
 
-The current definitions are in `project/crawler.py` and are also imported by
-the reviewer and graph scripts.
+## Saved data and review
 
-### Document
+Default local root: project/Pre-Processing/ (Git-ignored).
 
-One record represents one article:
+- Document_Collection.json: the authoritative array of ALL article records.
+- Documents/doc-123.json: pending or rejected article.
+- Documents/technology/doc-456.json: manually approved/labelled article.
 
-| Field | Type | Meaning |
-| --- | --- | --- |
-| `page_id` | `int` | Wikipedia's page identifier |
-| `doc_id` | `str` | Our stable, opaque ID, `doc-<page_id>`; never a row index |
-| `title` | `str` | Canonical title returned by the API |
-| `url` | `str` | Link to the article |
-| `collected_at` | `str` | UTC collection timestamp |
-| `revision_id` | `int` or `None` | Revision metadata recorded at collection time |
-| `text` | `str` | Full plain text returned by the API |
-| `preview` | `str` | First paragraph used for review/results |
-| `outgoing_links` | `list[str]` | Outgoing article titles returned by the API |
-| `topic` | `str` or `None` | Actual manual label; always `None` for new candidates |
-| `discovered_topic` | `str` or `None` | Seed-group provenance, not a manual label |
+approved=null means unreviewed, true means accepted, false means rejected.
+Rejected records and files stay on disk. Review updates the in-memory document,
+collection entry and article JSON after each choice. Approved files move into
+the selected topic folder; changing a decision moves them as needed.
+file_path is relative to the collection root.
 
-### DocumentCollection
+The default saved text and preview are the first three nonempty paragraphs.
+max_paragraphs and max_chars are configurable. Links are collected independently
+of excerpt length. Incoming links shown by the reviewer are local title matches,
+not Wikipedia-wide backlinks; unresolved redirect aliases may be missed.
 
-Stores the shared `documents: list[Document]`, keyed by Wikipedia page ID for
-deduplication. `add_document(document)` inserts a unique page and returns
-`False` if that page is already held; `get_documents()` returns the stored
-list; `get_by_page_id(page_id)` looks one up.
+See [the implementation guide](docs/IMPLEMENTATION.md) for commands and
+[docs/PARTNER_HANDOFF.md](docs/PARTNER_HANDOFF.md) for the revised interfaces.
 
-### WebCrawler
+## Offline tests
 
-Collects article records and preserves their outgoing links. It takes the
-shared collection as a constructor argument and exposes `crawl()`, described
-below.
+Install project/requirements.txt and pytest, then run from the repository root:
 
-## How collection works
+~~~powershell
+python -m pytest project/tests -q -p no:cacheprovider --basetemp=tmp/simple_workflow_tests
+~~~
 
-`WebCrawler` receives the collection in its constructor and fills it in place,
-so every component refers to the same object:
+Tests use small offline fixtures; they are not evidence of real retrieval
+quality. Importing the modules does not crawl or delete saved data.
 
-```python
-collection = DocumentCollection()
-crawler = WebCrawler(
-    document_collection=collection,
-    topics=["technology", "science"],
-    seed_topics=[["your technology seed"], ["your science seed"]],
-    depth=2,
-    max_pages_per_topic=40,
-)
-documents, adjacency_lists = crawler.crawl()
-```
+The preliminary local evaluation uses assistant-generated relevance judgments,
+not independently human-validated labels or a held-out benchmark. Generated
+data and results are not included in Git. Supply a reviewed collection and
+query-specific relevance judgments to reproduce an evaluation.
 
-`topics` and `seed_topics` are parallel lists, one seed list per topic. The CLI
-builds them from a seeds file keyed by the five topic names.
-
-`crawl()`:
-
-1. Takes one seed group at a time and starts a BFS queue with its titles.
-2. Requests plain article text, metadata and outgoing titles from the API,
-   following link continuation tokens so no batch is lost.
-3. Checks Wikipedia page IDs so the same article is never stored twice.
-4. Builds documents with `topic=None`, recording the seed group separately in
-   `discovered_topic`, and appends them to the supplied collection.
-5. Enqueues outgoing titles while below the depth limit. Every eligible link is
-   recorded whether or not BFS follows it.
-6. Stops a group at 40 new unique candidates, or when its queue is exhausted.
-7. Resolves every saved link against the collected documents and returns the
-   documents plus adjacency lists. The sparse matrix waits for manual review.
-
-The crawler keeps the supplied collection rather than replacing or clearing it,
-so use a fresh collection for a separate experiment. A per-group frontier avoids
-BFS cycles while the collection's page IDs prevent duplicates across groups. A
-page an earlier group already stored does not fill a second group's quota, but
-its outgoing links are still explored, so it can bridge two groups.
-
-Forty is a ceiling, not a guarantee: a shallow depth or a small
-`--max-links-per-page` can exhaust a group's frontier first. The crawler reports
-what each group actually collected.
-
-## Shared graph conventions
-
-- An adjacency list maps a source `doc_id` to destination `doc_id`s.
-- Duplicate edges and self-links are excluded; a dangling page has an empty list.
-- Rejecting an article removes both its list and references to it in other lists.
-- The final matrix is SciPy CSR. Entry `[i, j]` is 1 if document i links to j.
-- Matrix rows/columns follow the final `documents` list. The same ordering must
-  be used for document TF-IDF vectors and PageRank/TSPR arrays.
-- Although the code calls it an incidence matrix, it is mathematically a
-  directed, binary adjacency matrix.
-
-## Install and check
-
-Run from the repository root with Python 3.10 or newer:
-
-```powershell
-python -m pip install -r project/requirements.txt
-python -m pytest project/tests -q -p no:cacheprovider --basetemp=tmp/project_tests
-```
-
-Install `pytest` separately to run the tests. Crawling uses the public MediaWiki
-Action API; keep request delays and follow API pagination to retain all links.
-
-## Local files
-
-`.gitignore` excludes local `tmp/`, `output/`, downloaded data, Python caches,
-Word/PDF documents, and proposal-generation utilities. These remain available
-locally and are not part of the code repository.
+The spam-farm experiment remains planned work for the required before/after
+adversarial evaluation; clean-data metrics alone do not complete that study.
