@@ -1,4 +1,4 @@
-"""Search with TF-IDF, global PageRank or query-weighted topic PageRank."""
+"""Search with TF-IDF, PageRank, TSPR or a lexical/TSPR combination."""
 
 import argparse
 import json
@@ -14,6 +14,9 @@ if not __package__:
 from project.config import PREPROCESSING_DIR
 from project.indexing.normalize import tokenize
 from project.ranking.topic_model import query_topic_weights
+
+MODES = ("tfidf", "pagerank", "tspr", "hybrid")
+DEFAULT_LEXICAL_WEIGHT = 0.9
 
 
 def load_data(data_dir=PREPROCESSING_DIR, mode="tfidf"):
@@ -35,8 +38,8 @@ def load_data(data_dir=PREPROCESSING_DIR, mode="tfidf"):
     shape = (len(data["doc_ids"]), len(data["term_to_col"]))
     if data["tfidf_matrix"].shape != shape or data["idf"].shape != (shape[1],):
         raise ValueError("Index dimensions disagree. Rebuild the index and TF-IDF matrix.")
-    if mode not in {"tfidf", "pagerank", "tspr"}:
-        raise ValueError("Mode must be tfidf, pagerank or tspr.")
+    if mode not in MODES:
+        raise ValueError(f"Mode must be one of {MODES}.")
     if mode != "tfidf":
         ranking = json.loads((index_dir / "ranking.json").read_text(encoding="utf-8"))
         labels = [documents[d].get("topic") for d in data["doc_ids"]]
@@ -78,14 +81,17 @@ def make_query_vector(query, term_to_col, idf):
     return vector, list(counts)
 
 
-def search(query, data, top_k=10, mode="tfidf"):
-    """Find lexical candidates, then rank by cosine OR precomputed link scores.
+def search(query, data, top_k=10, mode="tfidf", lexical_weight=DEFAULT_LEXICAL_WEIGHT):
+    """Union postings, filter zero cosine, then apply the selected ranker.
 
-    TSPR's query weights mix all topic vectors. No PageRank iteration happens
-    at query time, and no arbitrary TF-IDF/link fusion weight is introduced.
+    Hybrid = w*cosine + (1-w)*(query-weighted TSPR / corpus-wide maximum).
+    The maximum uses ALL indexed documents, not only the candidate list.
+    No PageRank iteration happens at query time. Pure TSPR remains available.
     """
-    if mode not in {"tfidf", "pagerank", "tspr"}:
-        raise ValueError("Mode must be tfidf, pagerank or tspr.")
+    if mode not in MODES:
+        raise ValueError(f"Mode must be one of {MODES}.")
+    if not 0 <= lexical_weight <= 1:
+        raise ValueError("Lexical weight must be between zero and one.")
     query_vector, query_terms = make_query_vector(query, data["term_to_col"], data["idf"])
     if query_vector.nnz == 0 or top_k < 1:
         return []
@@ -98,22 +104,34 @@ def search(query, data, top_k=10, mode="tfidf"):
         return []
     # Only the candidate score column becomes dense, never the document-term matrix.
     cosine = (data["tfidf_matrix"][rows] @ query_vector.T).toarray().ravel()
-    if mode == "tspr":
+    link_scores = np.zeros(len(rows))
+    scaled_link_scores = np.zeros(len(rows))
+    if mode in {"tspr", "hybrid"}:
         model = data["topic_model"]
         weights = query_topic_weights(query, data["term_to_col"], data["topic_log_probs"], model["priors"])
-        scores = weights @ data["topic_pagerank"][:, rows]
+        importance = weights @ data["topic_pagerank"]
+        link_scores = importance[rows]
+        maximum = float(importance.max())
+        if maximum > 0:
+            scaled_link_scores = link_scores / maximum
+        scores = (lexical_weight * cosine + (1 - lexical_weight) * scaled_link_scores
+                  if mode == "hybrid" else link_scores)
     elif mode == "pagerank":
-        scores = data["global_pagerank"][rows]
+        link_scores = data["global_pagerank"][rows]
+        scores = link_scores
     else:
         scores = cosine
     # A zero topic-rank is legitimate; only zero lexical matches are filtered.
-    ranked = sorted(((row, score, text_score) for row, score, text_score in zip(rows, scores, cosine)
+    ranked = sorted(((row, score, text_score, link_score, scaled_link)
+                     for row, score, text_score, link_score, scaled_link
+                     in zip(rows, scores, cosine, link_scores, scaled_link_scores)
                      if text_score > 0), key=lambda item: item[1], reverse=True)
     results = []
-    for row, score, text_score in ranked[:top_k]:
+    for row, score, text_score, link_score, scaled_link in ranked[:top_k]:
         doc_id = data["doc_ids"][row]
         document = data["documents"][doc_id]
         results.append({"doc_id": doc_id, "score": float(score), "cosine": float(text_score),
+                        "link_score": float(link_score), "scaled_link_score": float(scaled_link),
                         "title": document["title"], "preview": document["preview"],
                         "url": document["url"], "topic": document.get("topic")})
     return results
@@ -123,8 +141,12 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path, default=PREPROCESSING_DIR)
     parser.add_argument("--top-k", type=int, default=10)
-    parser.add_argument("--mode", choices=("tfidf", "pagerank", "tspr"), default="tfidf")
+    parser.add_argument("--mode", choices=MODES, default="hybrid")
+    parser.add_argument("--lexical-weight", type=float, default=DEFAULT_LEXICAL_WEIGHT,
+                        help="Hybrid cosine weight, from 0 to 1 (default: 0.9).")
     args = parser.parse_args()
+    if not 0 <= args.lexical_weight <= 1:
+        parser.error("--lexical-weight must be between zero and one")
     try:
         data = load_data(args.data_dir, args.mode)
     except (FileNotFoundError, ValueError) as error:
@@ -140,16 +162,18 @@ def main():
             return
         if not query:
             continue
-        if args.mode == "tspr":
+        if args.mode in {"tspr", "hybrid"}:
             model = data["topic_model"]
             weights = query_topic_weights(query, data["term_to_col"], data["topic_log_probs"], model["priors"])
             print("Query topics: " + ", ".join(f"{t}={w:.1%}" for t, w in zip(model["topics"], weights)))
-        results = search(query, data, args.top_k, args.mode)
+        results = search(query, data, args.top_k, args.mode, args.lexical_weight)
         if not results:
             print("No matching documents.")
         for position, result in enumerate(results, start=1):
             label = "cosine" if args.mode == "tfidf" else args.mode
             print(f"\n{position}. {result['title']} | {label}={result['score']:.4f}")
+            if args.mode == "hybrid":
+                print(f"  cosine={result['cosine']:.4f}; scaled TSPR={result['scaled_link_score']:.4f}")
             print(result["url"])
             print(result["preview"])
 

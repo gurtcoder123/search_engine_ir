@@ -1,302 +1,140 @@
-# Partner handoff — revised collection/review contract
+# Shared implementation contract - Group 17
 
-This file records shared interfaces for the full project. The earlier A/B/C/D
-partner ownership split is no longer assumed; implementation continues here
-through retrieval, topic-sensitive ranking and attack evaluation.
+Updated for the completed clean/control/attack workflow. This supersedes the
+earlier planned A/B/C/D division; the modules below are integrated.
 
-## 1. Scope change: no graph implementation in A
+## Main entry points
 
-A supplies saved article records and manual approval/topic decisions.
+Run from the repository root:
 
-It does NOT supply a graph, adjacency lists/matrix, graph loader, resolved link
-IDs, graph row labels or corpus fingerprints. graph.py and graph-only tests have
-been removed. Ignore the previous graph export/load instructions.
-
-outgoing_links holds raw article titles. Any link resolution and matrix/row
-preparation required for ranking comes later, not in this crawler/reviewer.
-There is no discovered_topic. Seed groups control crawl quotas, not labels.
-
-## 2. Files and authoritative selection
-
-Default collection root: project/Pre-Processing/ (Git-ignored).
-
-- Document_Collection.json: a JSON ARRAY of ALL records, including rejected and
-  unreviewed articles. It is the reference for which documents are included.
-- Documents/doc-<page_id>.json: pending/rejected article records.
-- Documents/<topic>/doc-<page_id>.json: approved, manually labelled records.
-
-~~~text
-page_id: int
-doc_id: str
-title: str
-url: str
-collected_at: str
-revision_id: int | None
-preview: str
-text: str
-outgoing_links: list[str]
-topic: str | None
-approved: bool | None
-file_path: str                       relative to the collection root
+~~~powershell
+python -X utf8 -m project.preprocess
+python -X utf8 -m project.search --mode hybrid
+python -X utf8 -m project.evaluate --judgments project/evaluation_judgments.json
+python -X utf8 -m project.experiment --judgments project/evaluation_judgments.json --target-id doc-31524
 ~~~
 
-**Include a document only when approved is True.** File existence, folder and
-topic alone are not approval. Null means unreviewed; false means rejected.
-Both stay in the array, with their article files retained for later re-review.
+For new collections: project.collection.crawler, then project.collection.reviewer.
+The reviewed dataset is local/Git-ignored and supplied separately.
 
-The current doc_id is doc-123, an opaque filename/record ID, not a matrix row.
-Preserve saved IDs; use the text-index row mapping when accessing its matrix.
+## Document contract
 
-~~~python
-import json
-from pathlib import Path
-from project.collection.crawler import Document
+Document is defined in project/collection/crawler.py. Its fields are page_id,
+title, url, doc_id, collected_at, preview, topic, text, revision_id,
+outgoing_links, approved, file_path.
 
-root = Path("project/Pre-Processing")
-records = json.loads((root / "Document_Collection.json").read_text(encoding="utf-8"))
-documents = [Document(**r) for r in records if r.get("approved") is True]
-~~~
+- page_id is Wikipedia's integer ID; doc_id is an opaque string such as doc-1164.
+- outgoing_links contains article TITLES, never doc IDs or BFS parent pointers.
+- approved is null/true/false. Only exactly true enters preprocessing.
+- topic is one of the five project.config.TOPICS keys after approval.
+- file_path is relative to the collection root.
+- Document_Collection.json is the authoritative array; article files mirror it.
+- Reviewer saves both after each decision and exports Approved_Contents.json.
 
-Use root / document.file_path for the article's actual location.
-Review updates both JSON copies after each decision and sorts files into
-topic folders. A topic change moves the same file; rejecting it moves it back
-to Documents/. No document record is deleted.
+The shared DocumentCollection holds Document objects and deduplicates page IDs.
+Seed group controls crawl quota, not final labels. Reviewer owns final labels.
+No standalone graph.py is needed.
 
-Review may be incomplete. Check pending decisions, accepted counts and topic
-coverage before treating the dataset as final. The course corpus needs at least
-100 approved articles. Forty candidates per seed group is a crawl ceiling, not
-a guarantee of 40 final articles for each manual topic.
+## Offline artifacts
 
-This replaces the old data/candidates and data/reviewed JSONL interface.
-Old local data is not automatically deleted or migrated.
+project/preprocess.py rebuilds all derived files under Pre-Processing/Index/.
+Rerun it after text, link, approval or label changes. It does not recrawl.
 
-## 3. Topic labels, text and raw links
+| Artifact | Structure |
+| --- | --- |
+| inverted_index.json | term -> list of [doc_id, raw count] |
+| term_counts.json | doc_id -> term -> raw count |
+| df.json | term -> document frequency |
+| doc_ids.json | ordered list of opaque document ID strings |
+| doc_to_row.json | doc_id -> zero-based matrix row |
+| term_to_col.json | normalized term -> zero-based vocabulary column |
+| tfidf_matrix.npz | SciPy CSR, N documents by V vocabulary terms |
+| df.npy / idf.npy | length V, aligned with vocabulary columns |
+| topic_log_probs.npy | K by V, natural log P(term given topic) |
+| topic_model.json | topic order, priors, smoothing, word/doc totals |
+| topic_pagerank.npy | K by N, one converged topic rank per row |
+| global_pagerank.npy | length N, global baseline |
+| ranking.json | document/topic order, labels, settings, graph and convergence info |
 
-Fixed topic order in project/config.py:
+TOPICS order: technology, science, health_and_medicine, sports, politics.
+Technology includes business; science includes mathematics.
 
-~~~python
-topics = ["technology", "science", "health_and_medicine", "sports", "politics"]
-~~~
+## Text and topic scoring
 
-A candidate starts with topic=None and approved=None. Only human approval
-assigns exactly one topic from this list.
+Use project.indexing.normalize.tokenize for both documents and queries.
+Rules: Unicode NFKC, lowercase, simple apostrophe/initial handling, local stop
+words, NLTK PorterStemmer for plain ASCII English words. No NLTK corpus download.
+Numbers and hyphenated compounds are retained. No spelling prediction.
 
-Default text AND preview are the first three nonempty paragraphs, not the
-whole article. max_paragraphs/max_chars are configurable. Future indexing uses
-the text actually saved; do not silently fetch a different article version.
+TF(c) = 1+log10(c) for c>0, otherwise 0. IDF(t) = log10(N/DF(t)).
+Use the saved corpus IDF for queries too. L2-normalize nonzero document and
+query vectors; zero vectors stay zero. L2 is Euclidean length, not softmax.
 
-outgoing_links retains all namespace-0 link titles returned by the API,
-including continuation batches. It includes visited/unfollowed targets,
-self-links and destinations outside the eventual approved corpus. It is NOT
-a prefiltered internal graph, and BFS parent-child paths do not replace it.
+Topic model aggregates raw token counts by manual topic:
+P(term|topic) = (count+1)/(topic_word_total+V), with uniform priors.
+Query log-score = log prior + sum log probabilities over known repeated tokens.
+Exponentiate after subtracting the maximum and normalize across topics.
+Unknown words are ignored. This is a unigram classifier, not TF-IDF centroids.
 
-Collected pages are not revisited/re-expanded. An unknown redirect alias may
-need one request before its page ID reveals the duplicate.
+## Graph and PageRank
 
-The reviewer displays known incoming links by matching saved outgoing titles
-against canonical titles. It makes no API backlink calls. Uncollected sources
-and unresolved redirect aliases are not known incoming links.
+tspr.py builds internal binary source-row/destination-column links from saved
+outgoing titles. Keep cross-links/backlinks; deduplicate and omit self-links,
+outside targets and unresolved aliases. All numerical rows follow doc_ids.
 
-## 4. Shared tokenization and stemming — implemented
+r_new = 0.85*(A.T @ share + dangling_mass*v) + 0.15*v
+share = r/outdegree for non-dangling pages; zero otherwise.
+v is uniform over the topic's labelled pages, or all pages for global PR.
+Updates are simultaneous; new rank is used only on the next iteration.
+Stop at maximum absolute change <1e-8, cap 200; reject a non-converged build.
+Each vector sums to one. A topic vector can legitimately contain zeros.
 
-The shared entry point now lives in project/indexing/normalize.py, not the previously
-proposed preprocessing.py. Queries must import the same function:
-
-~~~python
-from project.indexing.normalize import tokenize
-query_tokens = tokenize(query_text)
-~~~
-
-Rules currently implemented:
-
-1. Unicode NFKC normalization and consistent apostrophes.
-2. Lowercase the entire text; remove possessive 's.
-3. Collapse dots in initial-style abbreviations (U.S.A. -> usa), without expansion.
-4. Extract word/number tokens. Hyphenated terms stay together (covid-19);
-   other punctuation/underscores are boundaries. Decimal dots are boundaries.
-5. Remove words from the small project-defined project/indexing/stopwords.txt list.
-6. Stem plain ASCII alphabetic words with NLTK's PorterStemmer in
-   NLTK_EXTENSIONS mode. For example, computer/computers/computing -> comput.
-
-Keep numbers and short/rare terms. Token order and repetitions are retained.
-Stop-word removal happens before stemming. Hyphenated compounds, numbers,
-mixed letter/number terms and non-ASCII words are not stemmed. NLTK is used
-only for PorterStemmer, not tokenization or corpora; no resource downloads are
-needed. Install the current project/requirements.txt. Recreate old unstemmed
-token files before building the shared vocabulary/index.
-Spelling correction, synonym/abbreviation expansion, embeddings and phrase
-retrieval are deferred.
-
-load_document(documentcollection) processes only approved documents and returns
-doc_id -> tokens. It writes Pre-Processing/Tokens/<doc_id>.json containing doc_id
-and tokens, without changing original article records or review decisions.
-Read only token files for currently approved IDs; old files are not an approval
-reference. No indexing is done in this module.
-
-## 5. Inverted index and document TF-IDF — implemented
-
-Run project/indexing/indexer.py after review and normalize.py. It reads current approval
-flags, then loads token files only for those approved IDs. Missing approved
-token files are an error; stale files for rejected/unreviewed articles are ignored.
-
-Implemented outputs under Pre-Processing/Index/:
-
-- inverted_index.json: term -> list of [doc_id, raw count]. Each document appears
-  once per term. In memory build_inverted_index() uses (doc_id, count) tuples;
-  JSON loads these as two-element lists, which can be unpacked the same way.
-- df.json: term -> number of documents containing that term, a plain dictionary.
-- term_counts.json: doc_id -> {term: raw integer count}, for topic models too.
-- doc_ids.json: the indexed approved document order, including empty documents.
-
-The indexer itself stores raw counts, with no positional postings. The separate
-project/indexing/tfidf.py step creates log-TF/IDF weights and the sparse text matrix.
-
-~~~python
-import json
-from pathlib import Path
-
-index_dir = Path("project/Pre-Processing/Index")
-inverted_index = json.loads((index_dir / "inverted_index.json").read_text(encoding="utf-8"))
-df = json.loads((index_dir / "df.json").read_text(encoding="utf-8"))
-term_counts = json.loads((index_dir / "term_counts.json").read_text(encoding="utf-8"))
-doc_ids = json.loads((index_dir / "doc_ids.json").read_text(encoding="utf-8"))
-~~~
-
-Run python project/indexing/tfidf.py AFTER indexer.py. Additional outputs in the same
-Index/ folder are:
-
-- term_to_col.json: processed term -> column, using a sorted vocabulary.
-- doc_to_row.json: doc_id -> row, following the existing doc_ids.json order.
-- df.npy and idf.npy: numerical arrays aligned with vocabulary columns.
-- tfidf_matrix.npz: L2-normalized SciPy CSR, shape (N, V).
-
-~~~python
-import numpy as np
-from scipy.sparse import load_npz
-
-term_to_col = json.loads((index_dir / "term_to_col.json").read_text(encoding="utf-8"))
-doc_to_row = json.loads((index_dir / "doc_to_row.json").read_text(encoding="utf-8"))
-df_vector = np.load(index_dir / "df.npy", allow_pickle=False)
-idf = np.load(index_dir / "idf.npy", allow_pickle=False)
-tfidf_matrix = load_npz(index_dir / "tfidf_matrix.npz")
-~~~
-
-Use these arrays/mappings together, loading once at query-program startup.
-df.json is still a term-keyed dictionary, while df.npy uses vocabulary order.
-These are text-index mappings, not a graph/adjacency export from the crawler.
-
-N is the APPROVED document count, not the length of Document_Collection.json.
-DF counts documents, not occurrences. Derive N from len(doc_ids), keeping
-approved empty documents in the total. Use that same order for future text
-and rank vectors. No row mapping is supplied by the crawler; tfidf.py exports
-the text-matrix mapping. No graph artifacts are built here.
-
-Exact agreed formulas:
-
-~~~text
-TF(c) = 1 + log10(c) if c > 0, otherwise 0
-IDF(t) = log10(N / DF(t))
-weight(t, document) = TF(count(t, document)) * IDF(t)
-
-norm(d) = sqrt(sum_j weight(j, d)^2)
-unit_d = d / norm(d), leaving zero vectors zero
-~~~
-
-Do not substitute log(1+c), smoothed IDF or BM25.
-Queries use saved corpus IDF, the same TF formula and L2 normalization.
-Cosine is the dot product of normalized query/document vectors.
-Candidates use the UNION of postings; search.py now implements this baseline.
-The supplied matrix is ALREADY normalized; do not normalize it again using
-the original document norms. Zero rows stay zero, and IDF=0 for a term present
-in every document. Unknown query terms are ignored; all-zero queries should
-return no lexical results. Rebuild normalize/indexer/tfidf outputs together
-after corpus or preprocessing changes; artifact compatibility is not automatic.
-
-Query-topic estimation uses processed RAW counts aggregated by manual labels,
-not TF-IDF centroids. It is now implemented in topic_model.py: add-one smoothing,
-uniform topic priors and log-space query likelihoods. Details follow below.
-
-## 6. Current versus pending deliverables
-
-Available now: collector/reviewer code, tokenization/token saving, inverted
-indexing with raw per-document counts and DF, vocabulary/row mappings,
-DF/IDF arrays and the normalized sparse TF-IDF text matrix,
-Document/DocumentCollection definitions and offline tests. A real corpus is available only after an actual crawl and
-human review. Generated data must be shared separately; Git ignores it.
-
-search.py now supplies load_data(), make_query_vector() and search(). Its loader
-returns approved metadata, postings, raw term counts, vocabulary, ordered IDs,
-row mapping, IDF and the sparse matrix in one dictionary. Load it once and pass
-it to repeated search calls:
+## Online API and ranking
 
 ~~~python
 from project.search import load_data, search
 
-data = load_data()
-results = search("computer software", data, top_k=10)
+data = load_data(mode="hybrid")          # once
+results = search("computer software", data, mode="hybrid", lexical_weight=0.9)
 ~~~
 
-Results are dictionaries with doc_id, score (cosine), title, preview, url and
-topic. Unknown/zero-vector queries return an empty list. The loader rejects
-an empty approved corpus, changed approval selection or incompatible array
-dimensions. It does not fingerprint text revisions; rebuild after text changes.
-The default CLI mode is the TF-IDF baseline; --mode tspr loads topic/rank data.
+The Python functions retain mode="tfidf" defaults for compatibility. The CLI
+defaults to hybrid. Load a link-aware mode before searching with any link mode.
 
-Topic estimation, PageRank/TSPR and query-weighted rank aggregation are now
-implemented. No real retrieval quality scores are claimed from tests.
+Candidates = union of postings; require positive cosine.
+- tfidf: cosine ranking.
+- pagerank: global PageRank ranking.
+- tspr: importance = query topic weights @ topic_pagerank.
+- hybrid: w*cosine + (1-w)*(importance/max(importance)); default w=0.9.
+  The maximum covers the whole corpus, not just candidates.
 
-## 7. Complete offline build and ranking contract
+Results include doc_id, score, cosine, link_score, scaled_link_score, title,
+preview, url and topic. The scaled component is supplied for TSPR/hybrid modes.
+No PageRank iteration or network request happens during search.
+The mixture is an importance score; topic-dependent dangling handling means we
+do not assert equivalence to a fresh mixed-teleport PageRank run.
 
-Run python project/preprocess.py after review. It reuses normalization, indexing
-and TF-IDF functions, then builds the unigram topic model and the rank vectors.
-All five manual topics must be represented. No auto-labeling is done.
-Source JSON stays unchanged. Run this command again after text/link/label changes.
+## Evaluation and attack contract
 
-The same Index/ folder also contains:
+The frozen project/evaluation_judgments.json contains query-specific relevant
+IDs, not topic-based inferred relevance. Labels are assistant-generated and
+await independent human validation. They are development judgments, not held out.
 
-- topic_log_probs.npy, shape (K, V), natural-log smoothed P(term|topic).
-- topic_model.json with topics, alpha=1.0, uniform priors, word_totals and doc_counts.
-- topic_pagerank.npy, shape (K, N), each row sums to one.
-- global_pagerank.npy, shape (N,), uniform-teleport PageRank baseline.
-- ranking.json with doc_ids, topics, labels, settings, link/dangling counts
-  and convergence details.
+evaluate.py evaluates four modes with macro P@K, R@K, F1@K and binary NDCG@K.
+P uses K even if fewer results are returned; F1 is averaged per query.
+Latency excludes loading/printing; traced memory is not process RSS.
 
-Rows follow doc_ids.json; vocabulary columns follow term_to_col.json. Topic rows
-follow TOPICS. Topic model probabilities are (raw count + 1)/(topic word total + V).
-query_topic_weights() uses the shared tokenize() and returns normalized Bayes
-weights across all five topics; repeated words count repeatedly, unknowns are
-ignored, and no known words returns the priors. This is supervised word-based
-classification, not latent topics or embeddings. Smoothing is our adaptation,
-not a claim of exactly reproducing Haveliwala's maximum-likelihood estimates.
+experiment.py builds separate clean/control/attacked directories. Ten farm
+pages duplicate the target's text and label. Control has no farm outlinks;
+attacked adds exactly one target link per farm page. No legitimate page is
+altered and no real Wikipedia page is edited. The target is explicitly supplied.
+Farm pages are nonrelevant duplicates; existing qrels remain unchanged.
 
-tspr.py internally resolves canonical title matches to these text rows and
-builds a binary CSR link matrix. No graph.py or standalone graph export is
-reintroduced; the crawler still only saves raw titles. Ignore external targets,
-self-links and unresolved aliases; collapse repeated edges. Every internal
-saved edge is retained, not just BFS discovery edges. Dangling pages are those
-with no outgoing link WITHIN this approved sample.
+Clean-to-attacked measures whole injection. Control-to-attacked isolates links
+while keeping text, IDF, topic model and document order identical.
+summary.json holds comparisons, target positions, hashes and a development-only
+weight sweep. The lexical weight is a fixed design setting, not an optimal value.
 
-PageRank uses damping 0.85, max absolute change <1e-8, cap 200 iterations.
-Each topic's teleport and dangling redistribution are uniform over documents
-with that manual label. Links are not restricted to the topic. Global PageRank
-uses a uniform vector across all approved documents. The builder refuses
-non-converged results rather than calling them finished.
-
-~~~python
-from project.search import load_data, search
-data = load_data(mode="tspr")
-results = search("computer chip", data, top_k=10, mode="tspr")
-~~~
-
-Modes: tfidf (default), pagerank, tspr. Shared postings produce lexical candidates;
-zero-cosine matches are excluded. TSPR sorts candidates by the dot product of
-query-topic weights and their topic rank scores. PageRank sorts by global
-rank; TF-IDF sorts by cosine. Results also include cosine alongside score.
-No new PageRank run occurs online. A fixed TF-IDF/link blending weight has NOT
-been chosen or introduced. Vector mixing is used as a ranking score; because
-dangling redistribution depends on the topic, it is not claimed to equal a
-single fresh run with mixed teleportation.
-
-HITS is not required. Relevance judging, Precision/Recall/F1, measurement and
-the report remain. The spam-farm experiment is deferred by user request; it
-still remains an explicit course requirement for before/after evaluation.
+The core attack experiment is implemented. A graphical UI, TrustRank defense,
+hard-versus-soft topic selection and damping experiments remain optional stretch
+work, not necessary to execute this delivered pipeline.

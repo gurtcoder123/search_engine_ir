@@ -1,4 +1,4 @@
-"""Evaluate saved query-specific relevance judgments against three rankings."""
+"""Evaluate explicit relevance judgments against lexical and link rankings."""
 
 import argparse
 from datetime import datetime, timezone
@@ -16,7 +16,7 @@ if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from project.config import PREPROCESSING_DIR
-from project.search import load_data, search
+from project.search import DEFAULT_LEXICAL_WEIGHT, MODES, load_data, search
 
 
 def metrics_at_k(retrieved, relevant, k=10):
@@ -31,7 +31,24 @@ def metrics_at_k(retrieved, relevant, k=10):
     return {"precision": precision, "recall": recall, "f1": f1, "hits": hits}
 
 
-def evaluate(data_dir, judgments_file, output_dir, k=10, repeats=20):
+def ndcg_at_k(retrieved, relevant, k=10):
+    """Binary relevance with log2 discount; unlike P@K this sees reordering."""
+    if k < 1:
+        raise ValueError("K must be positive.")
+    relevant = set(relevant)
+    discounts = 1 / np.log2(np.arange(2, k + 2))
+    ideal = float(discounts[:min(k, len(relevant))].sum())
+    seen = set()
+    dcg = 0.0
+    for position, doc_id in enumerate(retrieved[:k]):
+        if doc_id in relevant and doc_id not in seen:
+            dcg += discounts[position]
+        seen.add(doc_id)
+    return float(dcg / ideal) if ideal else 0.0
+
+
+def evaluate(data_dir, judgments_file, output_dir, k=10, repeats=20,
+             lexical_weight=DEFAULT_LEXICAL_WEIGHT):
     """Read explicit qrels, never infer relevance from document topic labels.
 
     Timings use warmed in-memory search, excluding input/printing and loading.
@@ -41,17 +58,19 @@ def evaluate(data_dir, judgments_file, output_dir, k=10, repeats=20):
     data_dir, output_dir = Path(data_dir), Path(output_dir)
     judgments = json.loads(Path(judgments_file).read_text(encoding="utf-8"))
     queries = judgments["queries"]
-    if not queries or k < 1 or repeats < 1:
-        raise ValueError("Provide queries and positive K/repeats.")
+    if not queries or k < 1 or repeats < 1 or not 0 <= lexical_weight <= 1:
+        raise ValueError("Provide queries, positive K/repeats and lexical weight in [0, 1].")
     query_ids = [q["id"] for q in queries]
     if len(query_ids) != len(set(query_ids)):
         raise ValueError("Query IDs must be unique.")
     report = {"created_at": datetime.now(timezone.utc).isoformat(),
               "corpus_sha256": hashlib.sha256((data_dir / "Document_Collection.json").read_bytes()).hexdigest(),
               "judgment_provenance": judgments["provenance"], "k": k, "queries": len(queries),
+              "judgments_sha256": hashlib.sha256(Path(judgments_file).read_bytes()).hexdigest(),
+              "lexical_weight": lexical_weight,
               "repeats": repeats, "python": platform.python_version(),
               "platform": platform.platform(), "processor": platform.processor(), "systems": {}}
-    for mode in ("tfidf", "pagerank", "tspr"):
+    for mode in MODES:
         tracemalloc.start()
         started = time.perf_counter()
         data = load_data(data_dir, mode=mode)
@@ -59,24 +78,26 @@ def evaluate(data_dir, judgments_file, output_dir, k=10, repeats=20):
         for query in queries:
             if not query["relevant"] or not set(query["relevant"]).issubset(data["documents"]):
                 raise ValueError(f"{query['id']}: qrels must contain known approved IDs and a positive example.")
-            search(query["query"], data, top_k=k, mode=mode)
+            search(query["query"], data, top_k=k, mode=mode, lexical_weight=lexical_weight)
         _, peak_bytes = tracemalloc.get_traced_memory()
         tracemalloc.stop()
         samples, rows = [], []
         for query in queries:
-            result = search(query["query"], data, top_k=k, mode=mode)
+            result = search(query["query"], data, top_k=k, mode=mode, lexical_weight=lexical_weight)
             retrieved = [record["doc_id"] for record in result]
             values = metrics_at_k(retrieved, query["relevant"], k)
+            values["ndcg"] = ndcg_at_k(retrieved, query["relevant"], k)
             rows.append({"id": query["id"], "query": query["query"], "relevant_count": len(query["relevant"]),
                          "returned_count": len(retrieved), "retrieved": retrieved, **values})
             for _ in range(repeats):
                 started = time.perf_counter()
-                search(query["query"], data, top_k=k, mode=mode)
+                search(query["query"], data, top_k=k, mode=mode, lexical_weight=lexical_weight)
                 samples.append((time.perf_counter() - started) * 1000)
         report["systems"][mode] = {
             "macro_precision": float(np.mean([r["precision"] for r in rows])),
             "macro_recall": float(np.mean([r["recall"] for r in rows])),
             "macro_f1": float(np.mean([r["f1"] for r in rows])),
+            "macro_ndcg": float(np.mean([r["ndcg"] for r in rows])),
             "mean_query_ms": float(np.mean(samples)), "median_query_ms": float(np.median(samples)),
             "p95_query_ms": float(np.percentile(samples, 95)),
             "peak_traced_mib": peak_bytes / 1024**2, "instrumented_load_seconds": load_seconds,
@@ -84,7 +105,8 @@ def evaluate(data_dir, judgments_file, output_dir, k=10, repeats=20):
         }
         print(f"{mode}: P@{k}={report['systems'][mode]['macro_precision']:.3f}, "
               f"R@{k}={report['systems'][mode]['macro_recall']:.3f}, "
-              f"F1@{k}={report['systems'][mode]['macro_f1']:.3f}", flush=True)
+              f"F1@{k}={report['systems'][mode]['macro_f1']:.3f}, "
+              f"NDCG@{k}={report['systems'][mode]['macro_ndcg']:.3f}", flush=True)
         del data
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "results.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
@@ -98,5 +120,6 @@ if __name__ == "__main__":
     parser.add_argument("--output-dir", type=Path, default=Path("output/evaluation"))
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--repeats", type=int, default=20)
+    parser.add_argument("--lexical-weight", type=float, default=DEFAULT_LEXICAL_WEIGHT)
     args = parser.parse_args()
-    evaluate(args.data_dir, args.judgments, args.output_dir, args.k, args.repeats)
+    evaluate(args.data_dir, args.judgments, args.output_dir, args.k, args.repeats, args.lexical_weight)

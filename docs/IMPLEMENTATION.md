@@ -131,6 +131,17 @@ Normal runs skip completed decisions; --review-again allows changing them.
 The summary displays approved/rejected/unreviewed counts and counts per topic.
 The intended course corpus needs at least 100 approved documents.
 
+On completion, q, Ctrl+C or end-of-input, the CLI also refreshes
+Pre-Processing/Approved_Contents.json. This is a topic-keyed table of contents
+with only title and doc_id for approved articles, sorted alphabetically within
+each topic. Empty topics have an empty list. It is a derived browsing aid;
+Document_Collection.json remains the source of truth for approval decisions.
+To refresh just this file without opening the reviewer:
+
+~~~powershell
+python -c "from project.collection.reviewer import save_approved_contents; print(save_approved_contents())"
+~~~
+
 The reviewer is offline. Incoming links are title matches from saved articles,
 not a Wikipedia-wide backlink lookup. Uncollected sources and unresolved
 redirect aliases are unknown.
@@ -279,10 +290,10 @@ Basic query retrieval and topic-sensitive ranking are implemented below.
 After review and the normalize/indexer/tfidf steps:
 
 ~~~powershell
-python project/search.py
+python project/search.py --mode tfidf
 # Optional:
-python project/search.py --top-k 5
-python project/search.py --data-dir tmp/my_corpus
+python project/search.py --mode tfidf --top-k 5
+python project/search.py --mode tfidf --data-dir tmp/my_corpus
 ~~~
 
 The index and approved metadata load once at startup. Type repeated queries;
@@ -302,7 +313,8 @@ index, startup asks for a rebuild. Same-ID text changes are not detected
 automatically: regenerate the offline artifacts after editing source text.
 
 The four functions in search.py are load_data(), make_query_vector(), search()
-and the small interactive main(). The default is still the TF-IDF baseline.
+and the small interactive main(). The CLI defaults to hybrid; the Python
+functions retain their TF-IDF defaults for compatibility with existing callers.
 
 ## 7. Build the topic model and TSPR (all offline steps in one command)
 
@@ -385,6 +397,7 @@ file needs to hold numerical matrices. Tokens are separate intermediate files.
 python project/search.py --mode tspr
 python project/search.py --mode tfidf
 python project/search.py --mode pagerank
+python project/search.py --mode hybrid --lexical-weight 0.9
 ~~~
 
 All modes use the same UNION of postings and retain only positive TF-IDF cosine
@@ -394,9 +407,13 @@ the candidates by sum_topic P(topic|query) * topic_rank(topic, document).
 The CLI shows the topic probabilities. Rank ties retain indexed document order.
 An article with zero link score can still be a valid lexical result.
 
-This implements query-weighted rank aggregation, not a chosen 70/30-style
-TF-IDF/link blend; cosine filters lexical matches but is not added to the link
-score. Additional fusion is deferred. With topic-dependent dangling handling,
+The tspr mode implements query-weighted rank aggregation: cosine filters lexical
+matches but is not added to that mode's link score. The separate hybrid mode uses
+score = w*cosine + (1-w)*(importance/max(importance)), default w=0.9. The maximum
+is over ALL corpus documents for that query, not only candidates. It is a fixed
+design choice, not an optimal weight established by held-out validation.
+Hybrid output includes the cosine and scaled link components.
+With topic-dependent dangling handling,
 we do not claim that a mixture of saved vectors is exactly the solution of one
 new PageRank run with a mixed teleport vector; we use it as the query importance
 score. No iteration or topic training happens at query time.
@@ -423,8 +440,7 @@ are not automatically detected. Use preprocess.py after any source edit.
 Evaluation needs manually judged query-document relevance labels, not just
 topic labels. Precision/Recall/F1, timing/memory measurements and the report
 can be computed with evaluate.py. Tests below verify code, not real-corpus relevance quality.
-The spam-farm experiment is deferred by request but remains explicitly required
-by the course; a clean-only evaluation is not the full Category 1 experiment.
+The spam-farm experiment is now implemented in project/experiment.py; see below.
 
 ## 9. Preliminary evaluation
 
@@ -438,6 +454,7 @@ and per-article JSON were updated through the existing reviewer workflow.
 
 ~~~powershell
 python project/evaluate.py --judgments output/evaluation/judgments.json --repeats 30
+python -m project.evaluate --judgments project/evaluation_judgments.json --repeats 30
 ~~~
 
 The supplied judgments file contains provenance and a queries array. Each query
@@ -449,7 +466,7 @@ assistant-generated content judgments, not independent human-validated qrels.
 Do not describe these results as a held-out benchmark or a human user study.
 
 evaluate.py writes output/evaluation/results.json with per-query rankings,
-macro Precision@10/Recall@10/F1@10, latency and peak traced allocations. P@10
+macro Precision@10/Recall@10/F1@10/NDCG@10, latency and peak traced allocations. P@10
 always divides by ten even for short result lists; Recall@10 divides by that
 query's relevant-set size. Macro F1 is the mean of per-query F1 values, not
 the harmonic mean of macro precision and recall. Query timing excludes loading,
@@ -457,6 +474,37 @@ printing and interactive input. Memory uses tracemalloc peak during loading
 plus a query pass; it is NOT process RSS. Run timing without concurrent tests.
 Generated data/results remain local and Git-ignored. The evaluation module and
 metric arithmetic tests are ordinary implementation code.
+
+## 10. Adversarial experiment
+
+~~~powershell
+python -X utf8 -m project.experiment --judgments project/evaluation_judgments.json --target-id doc-31524
+~~~
+
+The explicit target is Triathlon, nonrelevant to the World Cup evaluation intent
+but weakly matching its terms. The runner creates separate clean/control/attacked
+copies under output/attack/ and rebuilds all offline artifacts. The source
+collection and indexes are never written. Experiment output must be a separate
+directory tree. The supplied judgments and relevant IDs remain fixed.
+
+The control adds ten synthetic pages whose saved text duplicates the target,
+with the target's topic label and no outgoing links. The attacked copy differs
+only by adding a link from each farm page to the target. Synthetic IDs, URLs,
+titles and text are recorded; these are deliberately admitted local test pages,
+not real Wikipedia edits. Original document links remain unchanged.
+
+Clean-to-attacked includes all injection effects, including changed N, DF, topic
+word totals and teleport support. Control-to-attacked isolates the added links:
+document order, vocabulary, text matrix and query-topic probabilities match.
+No incoming links from legitimate documents are secretly added to the farm.
+
+summary.json contains all four ranking modes, before/after metric differences,
+target global/topic scores and per-query positions, source/qrels hashes and a
+lexical-weight sensitivity table. The fixed default w=0.9 predates the measured
+sweep. The sweep is descriptive development analysis, not held-out tuning.
+Binary NDCG discounts relevant hits by log2(rank+1) and divides by ideal DCG.
+It supplements P/R/F1 because those set metrics do not measure within-cutoff
+reordering. Neither stable P@10 nor a weak-target failure establishes immunity.
 
 ## Offline tests
 

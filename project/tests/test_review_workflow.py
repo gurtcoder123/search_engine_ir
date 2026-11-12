@@ -10,7 +10,7 @@ from unittest.mock import patch
 import pytest
 
 from project.config import TOPICS
-from project.collection.reviewer import review_documents
+from project.collection.reviewer import main, review_documents, save_approved_contents
 from project.tests.test_crawler import make_crawler
 
 
@@ -136,3 +136,44 @@ def test_no_review_decision_deletes_or_shortlists_away_raw_records(saved_corpus)
     accepted = [r for r in records if r["approved"] is True]
     assert len(records) == 3 and len(accepted) == 2
     assert {p.name for p in saved_corpus.iterdir()} == {"Documents", "Document_Collection.json"}
+
+
+def test_contents_has_only_approved_titles_and_ids_sorted_by_topic(tmp_path):
+    path = tmp_path / "Document_Collection.json"
+    path.write_text(json.dumps([
+        {"doc_id": "b", "title": "Zeta", "topic": "technology", "approved": True},
+        {"doc_id": "a", "title": "alpha", "topic": "technology", "approved": True},
+        {"doc_id": "c", "title": "Neutrino", "topic": "science", "approved": True},
+        {"doc_id": "r", "title": "Rejected", "topic": None, "approved": False},
+        {"doc_id": "u", "title": "Unreviewed", "topic": None, "approved": None},
+    ]), encoding="utf-8")
+    before = path.read_bytes()
+    contents_path = save_approved_contents(tmp_path)
+    contents = json.loads(contents_path.read_text(encoding="utf-8"))
+    assert list(contents) == list(TOPICS)
+    assert contents["technology"] == [{"title": "alpha", "doc_id": "a"}, {"title": "Zeta", "doc_id": "b"}]
+    assert contents["science"] == [{"title": "Neutrino", "doc_id": "c"}]
+    assert contents["sports"] == []
+    assert path.read_bytes() == before
+
+
+def test_contents_refresh_removes_old_approvals_and_keeps_unicode(tmp_path):
+    path = tmp_path / "Document_Collection.json"
+    records = [{"doc_id": "a", "title": "Šuker", "topic": "sports", "approved": True}]
+    path.write_text(json.dumps(records), encoding="utf-8")
+    contents_path = save_approved_contents(tmp_path)
+    assert "Šuker" in contents_path.read_text(encoding="utf-8")
+    records[0]["approved"] = False
+    path.write_text(json.dumps(records), encoding="utf-8")
+    save_approved_contents(tmp_path)
+    assert all(not articles for articles in json.loads(contents_path.read_text()).values())
+
+
+@pytest.mark.parametrize("choices", [["1", "q"], ["1", EOFError()], ["1", KeyboardInterrupt()]])
+def test_cli_exports_saved_decisions_even_when_stopped_early(saved_corpus, choices):
+    with patch.object(sys, "argv", ["reviewer.py", "--data-dir", str(saved_corpus)]), \
+            patch("builtins.input", side_effect=choices):
+        main()
+    contents = json.loads((saved_corpus / "Approved_Contents.json").read_text())
+    assert contents["technology"] == [{"title": "A", "doc_id": "doc-1"}]
+    assert sum(len(articles) for articles in contents.values()) == 1

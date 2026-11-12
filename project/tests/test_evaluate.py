@@ -2,7 +2,7 @@
 
 import pytest
 
-from project.evaluate import metrics_at_k
+from project.evaluate import metrics_at_k, ndcg_at_k
 
 
 def test_precision_recall_f1_hand_example():
@@ -27,3 +27,14 @@ def test_cutoff_unknown_retrieval_and_zero_hits():
 def test_invalid_cutoff_is_rejected():
     with pytest.raises(ValueError, match="positive"):
         metrics_at_k([], [], 0)
+
+
+def test_ndcg_distinguishes_orders_with_identical_precision():
+    assert metrics_at_k(["a", "x"], ["a"], 2) == metrics_at_k(["x", "a"], ["a"], 2)
+    assert ndcg_at_k(["a", "x"], ["a"], 2) == 1
+    assert ndcg_at_k(["x", "a"], ["a"], 2) == pytest.approx(1 / 1.584962500721156)
+    assert ndcg_at_k(["a", "b"], ["a", "b"], 2) == 1
+    assert ndcg_at_k([], [], 2) == 0
+    assert ndcg_at_k(["a", "a"], ["a", "b"], 2) < 1
+    with pytest.raises(ValueError, match="positive"):
+        ndcg_at_k([], [], 0)

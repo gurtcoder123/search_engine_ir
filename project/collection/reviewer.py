@@ -13,6 +13,21 @@ from project.config import PREPROCESSING_DIR, TOPICS
 from project.collection.crawler import Document, normalize_title
 
 
+def save_approved_contents(data_dir=PREPROCESSING_DIR):
+    """Write a readable topic -> title/ID list from the saved approval decisions."""
+    data_dir = Path(data_dir)
+    records = json.loads((data_dir / "Document_Collection.json").read_text(encoding="utf-8"))
+    contents = {topic: [] for topic in TOPICS}
+    for record in records:
+        if record.get("approved") is True:
+            contents[record["topic"]].append({"title": record["title"], "doc_id": record["doc_id"]})
+    for articles in contents.values():
+        articles.sort(key=lambda article: article["title"].casefold())
+    path = data_dir / "Approved_Contents.json"
+    path.write_text(json.dumps(contents, ensure_ascii=False, indent=2), encoding="utf-8")
+    return path
+
+
 def review_documents(data_dir=PREPROCESSING_DIR, *, review_again=False):
     """Update the in-memory list, article file and collection after each choice.
 
@@ -95,6 +110,9 @@ def main():
     except (KeyboardInterrupt, EOFError):
         print("\nStopped; completed decisions are saved. Run again to resume.")
         return
+    finally:
+        contents_path = save_approved_contents(args.data_dir)
+        print(f"Approved article contents saved to {contents_path}")
     approved = [d for d in documents if d.approved is True]
     print(f"\nApproved: {len(approved)}; rejected: {sum(d.approved is False for d in documents)}; "
           f"unreviewed: {sum(d.approved is None for d in documents)}")

@@ -111,7 +111,7 @@ def test_interactive_cli_handles_repeated_queries_then_quits(corpus, as_module):
         command += ["-m", "project.search"]
     else:
         command += [str(Path(__file__).resolve().parents[1] / "search.py")]
-    result = subprocess.run(command + ["--data-dir", str(corpus)],
+    result = subprocess.run(command + ["--data-dir", str(corpus), "--mode", "tfidf"],
                             input="software\nzzzzunknownterm\nq\n", text=True,
                             capture_output=True, check=True)
     assert result.stdout.count("Loaded 4 documents") == 1

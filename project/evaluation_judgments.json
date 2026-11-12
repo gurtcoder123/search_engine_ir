@@ -1,0 +1,57 @@
+{
+  "provenance": "Assistant-generated preliminary binary content judgments; not independently human validated.",
+  "scope": "All approved saved article texts considered; unlisted approved IDs judged nonrelevant per intent. Synthetic farm duplicates are nonrelevant.",
+  "selection": "Corpus-informed development queries frozen before the original ranking outputs; not a held-out benchmark. Relevant sets unchanged for final experiments.",
+  "queries": [
+    {
+      "id": "Q01", "topic": "technology", "query": "artificial intelligence learning",
+      "intent": "Explanations of AI methods, models, applications or AI research-company systems. Exclude general biographies, investment profiles, general universities and technology-risk essays.",
+      "relevant": ["doc-48795986", "doc-1164", "doc-1167455", "doc-79558416", "doc-73248112", "doc-79970630", "doc-58714104", "doc-203619", "doc-71642695", "doc-21391751", "doc-1706303"]
+    },
+    {
+      "id": "Q02", "topic": "technology", "query": "venture capital software investment",
+      "intent": "Venture-capital firms whose saved text describes investment in software or internet businesses. Exclude companies merely receiving funding and magazines reporting on investment.",
+      "relevant": ["doc-18421258", "doc-34655748", "doc-72557062"]
+    },
+    {
+      "id": "Q03", "topic": "science", "query": "neutrino detector experiment",
+      "intent": "Neutrino properties/discovery and experiments dedicated to detecting neutrinos. Exclude general particle physics or dark-matter laboratories without dedicated neutrino detection in the saved text.",
+      "relevant": ["doc-21485", "doc-8356138", "doc-32074177", "doc-3415504", "doc-81649308", "doc-241033"]
+    },
+    {
+      "id": "Q04", "topic": "science", "query": "graph theory vertices edges",
+      "intent": "Mathematical graph definitions, graph constructions and connectivity of graphs. Exclude knowledge-graph websites and general programming languages.",
+      "relevant": ["doc-325806", "doc-2856852", "doc-24673785", "doc-1614492"]
+    },
+    {
+      "id": "Q05", "topic": "health_and_medicine", "query": "viral infection fever",
+      "intent": "Human viral diseases, human-disease-causing virus families/species and viral outbreaks. Exclude bacterial conditions, bacteriophage taxonomy, general vaccines and primarily social/economic effects.",
+      "relevant": ["doc-40817590", "doc-1548205", "doc-2052864", "doc-59171", "doc-2859941", "doc-44794841", "doc-2078908", "doc-6944726", "doc-1432191", "doc-22555940", "doc-302755"]
+    },
+    {
+      "id": "Q06", "topic": "health_and_medicine", "query": "blood bleeding clotting",
+      "intent": "Clinical blood disorders, bleeding collections and clotting disorders. Exclude infectious diseases where bleeding is one symptom and general tissue definitions.",
+      "relevant": ["doc-684811", "doc-2933134", "doc-12514534", "doc-3702720", "doc-3820402"]
+    },
+    {
+      "id": "Q07", "topic": "sports", "query": "FIFA World Cup tournament seeding",
+      "intent": "World Cup competitions, qualification, draws/seeding, finals and officiating arrangements. Exclude player biographies, national-team profiles, video games and unrelated FIFA awards.",
+      "relevant": ["doc-11370", "doc-2327685", "doc-5376102", "doc-40808598", "doc-14481060", "doc-70432805", "doc-72279931", "doc-157232"]
+    },
+    {
+      "id": "Q08", "topic": "sports", "query": "women football players",
+      "intent": "Women footballers, women's football structures and awards specifically for women. Exclude predominantly men's football awards, clubs, players and tournaments.",
+      "relevant": ["doc-38414023", "doc-20897682", "doc-35499845", "doc-21644506"]
+    },
+    {
+      "id": "Q09", "topic": "politics", "query": "international diplomatic cooperation",
+      "intent": "Diplomatic forums, bilateral relations and negotiated international treaties. Exclude country profiles, domestic parties, military campaign narratives and regional geography.",
+      "relevant": ["doc-82104946", "doc-4028762", "doc-71707207", "doc-38065993", "doc-43037442", "doc-3111840"]
+    },
+    {
+      "id": "Q10", "topic": "politics", "query": "state government political system",
+      "intent": "State governing arrangements, constitutional country profiles, public regulatory institutions, political parties and colonial administration. Exclude diplomacy, cultural/geographic regions, party newspapers, and conflicts without an administrative-system focus.",
+      "relevant": ["doc-3463", "doc-202354", "doc-3607937", "doc-5058739", "doc-16642", "doc-9646367", "doc-149333", "doc-217450", "doc-51274655"]
+    }
+  ]
+}

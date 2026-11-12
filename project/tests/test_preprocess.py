@@ -82,6 +82,35 @@ def test_changed_manual_topic_requires_rank_rebuild(corpus):
         load_data(corpus, mode="tspr")
 
 
+def test_hybrid_formula_uses_corpus_maximum_and_endpoint_weights(corpus):
+    build_search_data(corpus)
+    data = load_data(corpus, mode="hybrid")
+    # An unmatched document sets the maximum: scaling must not depend on candidates.
+    data["topic_pagerank"][:] = [.1, .6, .1, .2, 0]
+    results = search("computer football", data, mode="hybrid", lexical_weight=.9)
+    for result in results:
+        row = data["doc_to_row"][result["doc_id"]]
+        expected_link = data["topic_pagerank"][0, row] / .6
+        assert result["scaled_link_score"] == pytest.approx(expected_link)
+        assert result["score"] == pytest.approx(.9 * result["cosine"] + .1 * expected_link)
+    assert [r["doc_id"] for r in search("computer football", data, mode="hybrid", lexical_weight=1)] == [
+        r["doc_id"] for r in search("computer football", data, mode="tfidf")]
+    assert [r["doc_id"] for r in search("computer football", data, mode="hybrid", lexical_weight=0)] == [
+        r["doc_id"] for r in search("computer football", data, mode="tspr")]
+    data["topic_pagerank"][:] = 0
+    assert all(np.isfinite(r["score"]) for r in search("computer", data, mode="hybrid"))
+    with pytest.raises(ValueError, match="Lexical weight"):
+        search("computer", data, mode="hybrid", lexical_weight=1.1)
+
+
+def test_default_cli_is_hybrid_and_prints_both_components(corpus):
+    build_search_data(corpus)
+    result = subprocess.run([sys.executable, "-B", "-m", "project.search", "--data-dir", str(corpus)],
+                            input="computer\nq\n", text=True, capture_output=True, check=True)
+    assert "Ranking mode: hybrid" in result.stdout
+    assert "cosine=" in result.stdout and "scaled TSPR=" in result.stdout
+
+
 def test_no_approved_documents_explains_review_first(corpus):
     path = corpus / "Document_Collection.json"
     records = json.loads(path.read_text())
