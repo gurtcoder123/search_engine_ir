@@ -15,7 +15,9 @@ python -X utf8 -m project.experiment --judgments project/evaluation_judgments.js
 ~~~
 
 For new collections: project.collection.crawler, then project.collection.reviewer.
-The reviewed dataset is local/Git-ignored and supplied separately.
+The reviewed dataset, token files and offline artifacts are versioned under
+project/Pre-Processing/. Clone the repository to get the exact saved corpus.
+Generated experiment directories, temporary files and PDFs remain Git-ignored.
 
 ## Document contract
 

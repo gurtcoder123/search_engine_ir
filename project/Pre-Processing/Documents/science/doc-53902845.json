@@ -1,0 +1,32 @@
+{
+  "page_id": 53902845,
+  "title": "Graphene plasmonics",
+  "url": "https://en.wikipedia.org/wiki/Graphene_plasmonics",
+  "doc_id": "doc-53902845",
+  "collected_at": "2026-10-25T09:01:40.953174+00:00",
+  "preview": "Graphene is a 2D nanosheet with atomic thin thickness in terms of 0.34 nm. Due to the ultrathin thickness, graphene showed many properties that are quite different from their bulk graphite counterparts. The most prominent advantages are known to be their high electron mobility and high mechanical strengths.\n\nThus, it exhibits potential for applications in optics and electronics especially for the development of wearable devices as flexible substrates. More importantly, the optical absorption rate of graphene is 2.3% in the visible and near-infrared region. This broadband absorption characteristic also attracted great attention of the research community to exploit the graphene-based photodetectors/modulators.\nPlasmons are collective electron oscillations usually excited at metal surfaces by a light source. Doped graphene layers have also shown the similar surface plasmon effects to that of metallic thin films. Through the engineering of metallic substrates or nanoparticles (e.g., gold, silver and copper) with graphene, the plasmonic properties of the hybrid structures could be tuned for improving the optoelectronic device performances. The electrons at the metallic structure could transfer to the graphene conduction band. This is attributed to the zero bandgap property of graphene nanosheet.\nGraphene plasmons can also be decoupled from their environment and give rise to genuine Dirac plasmon at low-energy range where the wavelengths exceed the damping length. These graphene plasma resonances have been observed in the GHz–THz electronic domain.\n\n== Application ==\nWhen the plasmons were resonant at the graphene/metal surface, a strong electric field would be induced which could enhance the generation of electron-hole pairs in the graphene layer. The excited electron carrier numbers linearly increased with the field intensity based on the Fermi’s rule. The induced charge carriers of metal/graphene hybrid nanostructure could be up to 7 times higher than that of pristine graphene ones due to the plasmonic enhancement.\nSo far, the graphene plasmonic effects have been demonstrated for different applications ranging from light modulation to biological/chemical sensing. High-speed photodetection at 10 Gbit/s based on graphene and 20-fold improvement on the detection efficiency through graphene/gold nanostructure were also reported. Graphene plasmonics are considered as good alternatives to the noble metal plasmons not only due to their cost-effectiveness for large-scale production but also by the higher confinement of the plasmonics at the graphene surface. The enhanced light–matter interactions could further be optimized and tuned through electrostatic gating. These advantages of graphene plasmonics paved a way to achieve single-molecule detection and single-plasmon excitation.",
+  "topic": "science",
+  "text": "Graphene is a 2D nanosheet with atomic thin thickness in terms of 0.34 nm. Due to the ultrathin thickness, graphene showed many properties that are quite different from their bulk graphite counterparts. The most prominent advantages are known to be their high electron mobility and high mechanical strengths.\n\nThus, it exhibits potential for applications in optics and electronics especially for the development of wearable devices as flexible substrates. More importantly, the optical absorption rate of graphene is 2.3% in the visible and near-infrared region. This broadband absorption characteristic also attracted great attention of the research community to exploit the graphene-based photodetectors/modulators.\nPlasmons are collective electron oscillations usually excited at metal surfaces by a light source. Doped graphene layers have also shown the similar surface plasmon effects to that of metallic thin films. Through the engineering of metallic substrates or nanoparticles (e.g., gold, silver and copper) with graphene, the plasmonic properties of the hybrid structures could be tuned for improving the optoelectronic device performances. The electrons at the metallic structure could transfer to the graphene conduction band. This is attributed to the zero bandgap property of graphene nanosheet.\nGraphene plasmons can also be decoupled from their environment and give rise to genuine Dirac plasmon at low-energy range where the wavelengths exceed the damping length. These graphene plasma resonances have been observed in the GHz–THz electronic domain.\n\n== Application ==\nWhen the plasmons were resonant at the graphene/metal surface, a strong electric field would be induced which could enhance the generation of electron-hole pairs in the graphene layer. The excited electron carrier numbers linearly increased with the field intensity based on the Fermi’s rule. The induced charge carriers of metal/graphene hybrid nanostructure could be up to 7 times higher than that of pristine graphene ones due to the plasmonic enhancement.\nSo far, the graphene plasmonic effects have been demonstrated for different applications ranging from light modulation to biological/chemical sensing. High-speed photodetection at 10 Gbit/s based on graphene and 20-fold improvement on the detection efficiency through graphene/gold nanostructure were also reported. Graphene plasmonics are considered as good alternatives to the noble metal plasmons not only due to their cost-effectiveness for large-scale production but also by the higher confinement of the plasmonics at the graphene surface. The enhanced light–matter interactions could further be optimized and tuned through electrostatic gating. These advantages of graphene plasmonics paved a way to achieve single-molecule detection and single-plasmon excitation.",
+  "revision_id": 1369901894,
+  "outgoing_links": [
+    "ArXiv (identifier)",
+    "Bibcode (identifier)",
+    "Doi (identifier)",
+    "Electric field",
+    "Electron mobility",
+    "Graphene",
+    "Hdl (identifier)",
+    "ISSN (identifier)",
+    "Nanomaterial",
+    "Nanosheet",
+    "Nanostructure",
+    "Noble metal",
+    "PMC (identifier)",
+    "PMID (identifier)",
+    "Plasmon",
+    "S2CID (identifier)",
+    "Surface plasmon polariton"
+  ],
+  "approved": true,
+  "file_path": "Documents/science/doc-53902845.json"
+}

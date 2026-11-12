@@ -1,0 +1,660 @@
+{
+  "technology": [
+    {
+      "title": "AlphaEvolve",
+      "doc_id": "doc-79970630"
+    },
+    {
+      "title": "Artificial intelligence",
+      "doc_id": "doc-1164"
+    },
+    {
+      "title": "Boeing 737 MAX",
+      "doc_id": "doc-32924090"
+    },
+    {
+      "title": "Boeing 777",
+      "doc_id": "doc-89260"
+    },
+    {
+      "title": "Dario Amodei",
+      "doc_id": "doc-74329563"
+    },
+    {
+      "title": "Digg",
+      "doc_id": "doc-11041618"
+    },
+    {
+      "title": "Elon Musk",
+      "doc_id": "doc-909036"
+    },
+    {
+      "title": "FIFA 18",
+      "doc_id": "doc-50606739"
+    },
+    {
+      "title": "Forbes",
+      "doc_id": "doc-294894"
+    },
+    {
+      "title": "Formal language",
+      "doc_id": "doc-10939"
+    },
+    {
+      "title": "Furhat Robotics",
+      "doc_id": "doc-79558416"
+    },
+    {
+      "title": "General Electric GE90",
+      "doc_id": "doc-433825"
+    },
+    {
+      "title": "Greylock Partners",
+      "doc_id": "doc-18421258"
+    },
+    {
+      "title": "Handwriting recognition",
+      "doc_id": "doc-203619"
+    },
+    {
+      "title": "Headline (company)",
+      "doc_id": "doc-34655748"
+    },
+    {
+      "title": "Kotlin",
+      "doc_id": "doc-41819039"
+    },
+    {
+      "title": "Large language model",
+      "doc_id": "doc-73248112"
+    },
+    {
+      "title": "Massachusetts Institute of Technology",
+      "doc_id": "doc-18879"
+    },
+    {
+      "title": "Metacritic",
+      "doc_id": "doc-805870"
+    },
+    {
+      "title": "OpenAI",
+      "doc_id": "doc-48795986"
+    },
+    {
+      "title": "OpenAI Five",
+      "doc_id": "doc-58714104"
+    },
+    {
+      "title": "Python (programming language)",
+      "doc_id": "doc-23862"
+    },
+    {
+      "title": "Recurrent neural network",
+      "doc_id": "doc-1706303"
+    },
+    {
+      "title": "Recursive self-improvement",
+      "doc_id": "doc-1167455"
+    },
+    {
+      "title": "Stable Diffusion",
+      "doc_id": "doc-71642695"
+    },
+    {
+      "title": "The Wall Street Journal",
+      "doc_id": "doc-173070"
+    },
+    {
+      "title": "Thrive Capital",
+      "doc_id": "doc-72557062"
+    },
+    {
+      "title": "Turing test",
+      "doc_id": "doc-21391751"
+    },
+    {
+      "title": "Unexploded ordnance",
+      "doc_id": "doc-406804"
+    },
+    {
+      "title": "Vulnerable world hypothesis",
+      "doc_id": "doc-73908187"
+    },
+    {
+      "title": "Water landing",
+      "doc_id": "doc-5002284"
+    },
+    {
+      "title": "Wikidata",
+      "doc_id": "doc-35412202"
+    },
+    {
+      "title": "Xbox 360",
+      "doc_id": "doc-7514833"
+    }
+  ],
+  "science": [
+    {
+      "title": "Aircraft design process",
+      "doc_id": "doc-29564581"
+    },
+    {
+      "title": "American Association for the Advancement of Science",
+      "doc_id": "doc-243062"
+    },
+    {
+      "title": "Antarctic Impulsive Transient Antenna",
+      "doc_id": "doc-3415504"
+    },
+    {
+      "title": "Anyon",
+      "doc_id": "doc-367654"
+    },
+    {
+      "title": "ARIANNA Experiment",
+      "doc_id": "doc-32074177"
+    },
+    {
+      "title": "Big Crunch",
+      "doc_id": "doc-206122"
+    },
+    {
+      "title": "Cartesian product of graphs",
+      "doc_id": "doc-2856852"
+    },
+    {
+      "title": "Coherent Collaboration",
+      "doc_id": "doc-81649308"
+    },
+    {
+      "title": "Connectivity (graph theory)",
+      "doc_id": "doc-1614492"
+    },
+    {
+      "title": "Dennis Overbye",
+      "doc_id": "doc-9723633"
+    },
+    {
+      "title": "Derivation of the Navier–Stokes equations",
+      "doc_id": "doc-10656445"
+    },
+    {
+      "title": "Diffraction grating",
+      "doc_id": "doc-41031"
+    },
+    {
+      "title": "Fluid mechanics",
+      "doc_id": "doc-2684988"
+    },
+    {
+      "title": "Geographic coordinate system",
+      "doc_id": "doc-48361"
+    },
+    {
+      "title": "Geometrical optics",
+      "doc_id": "doc-731780"
+    },
+    {
+      "title": "George Boole",
+      "doc_id": "doc-38298"
+    },
+    {
+      "title": "Graph (discrete mathematics)",
+      "doc_id": "doc-325806"
+    },
+    {
+      "title": "Graphene plasmonics",
+      "doc_id": "doc-53902845"
+    },
+    {
+      "title": "Guinea pig",
+      "doc_id": "doc-62696"
+    },
+    {
+      "title": "Invasive species",
+      "doc_id": "doc-67554"
+    },
+    {
+      "title": "Liquid",
+      "doc_id": "doc-18993825"
+    },
+    {
+      "title": "Liquid crystal",
+      "doc_id": "doc-17973"
+    },
+    {
+      "title": "Micro black hole",
+      "doc_id": "doc-709427"
+    },
+    {
+      "title": "Muon neutrino",
+      "doc_id": "doc-241033"
+    },
+    {
+      "title": "Mustard gas",
+      "doc_id": "doc-46126"
+    },
+    {
+      "title": "Natural deduction",
+      "doc_id": "doc-51072"
+    },
+    {
+      "title": "Navier–Stokes equations",
+      "doc_id": "doc-48395"
+    },
+    {
+      "title": "Neutrino",
+      "doc_id": "doc-21485"
+    },
+    {
+      "title": "Particle physics",
+      "doc_id": "doc-23259"
+    },
+    {
+      "title": "Pentaquark",
+      "doc_id": "doc-257243"
+    },
+    {
+      "title": "Plasmon",
+      "doc_id": "doc-231630"
+    },
+    {
+      "title": "Preon",
+      "doc_id": "doc-1430548"
+    },
+    {
+      "title": "Schreier coset graph",
+      "doc_id": "doc-24673785"
+    },
+    {
+      "title": "Science (journal)",
+      "doc_id": "doc-193513"
+    },
+    {
+      "title": "Sir George Stokes, 1st Baronet",
+      "doc_id": "doc-212838"
+    },
+    {
+      "title": "SNO+",
+      "doc_id": "doc-8356138"
+    },
+    {
+      "title": "Speed of sound",
+      "doc_id": "doc-147853"
+    },
+    {
+      "title": "Stawell Underground Physics Laboratory",
+      "doc_id": "doc-46542792"
+    },
+    {
+      "title": "Strangelet",
+      "doc_id": "doc-20647505"
+    },
+    {
+      "title": "Top quark",
+      "doc_id": "doc-241029"
+    },
+    {
+      "title": "Trion (physics)",
+      "doc_id": "doc-26964158"
+    },
+    {
+      "title": "Tropical climate",
+      "doc_id": "doc-456161"
+    },
+    {
+      "title": "Urea",
+      "doc_id": "doc-31734"
+    },
+    {
+      "title": "Volvereviria",
+      "doc_id": "doc-82741759"
+    }
+  ],
+  "health_and_medicine": [
+    {
+      "title": "2009 swine flu pandemic",
+      "doc_id": "doc-22555940"
+    },
+    {
+      "title": "Activated protein C resistance",
+      "doc_id": "doc-3702720"
+    },
+    {
+      "title": "Acute bronchitis",
+      "doc_id": "doc-302755"
+    },
+    {
+      "title": "Andes virus",
+      "doc_id": "doc-6944726"
+    },
+    {
+      "title": "Autoimmune hemolytic anemia",
+      "doc_id": "doc-3820402"
+    },
+    {
+      "title": "Bourbon virus",
+      "doc_id": "doc-44794841"
+    },
+    {
+      "title": "Connective tissue",
+      "doc_id": "doc-228845"
+    },
+    {
+      "title": "Dental abrasion",
+      "doc_id": "doc-1915056"
+    },
+    {
+      "title": "Dysfibrinogenemia",
+      "doc_id": "doc-12514534"
+    },
+    {
+      "title": "Early childhood caries",
+      "doc_id": "doc-3834700"
+    },
+    {
+      "title": "Ebola",
+      "doc_id": "doc-40817590"
+    },
+    {
+      "title": "Flu season",
+      "doc_id": "doc-2859941"
+    },
+    {
+      "title": "GSK plc",
+      "doc_id": "doc-192517"
+    },
+    {
+      "title": "Hematoma",
+      "doc_id": "doc-684811"
+    },
+    {
+      "title": "Hyphema",
+      "doc_id": "doc-2933134"
+    },
+    {
+      "title": "ICD-10",
+      "doc_id": "doc-13745451"
+    },
+    {
+      "title": "Japanese encephalitis",
+      "doc_id": "doc-1432191"
+    },
+    {
+      "title": "Joint",
+      "doc_id": "doc-210242"
+    },
+    {
+      "title": "Keratoacanthoma",
+      "doc_id": "doc-3375234"
+    },
+    {
+      "title": "Leptospirosis",
+      "doc_id": "doc-649760"
+    },
+    {
+      "title": "Lupus vulgaris",
+      "doc_id": "doc-3425957"
+    },
+    {
+      "title": "Mumps",
+      "doc_id": "doc-59171"
+    },
+    {
+      "title": "O'nyong'nyong virus",
+      "doc_id": "doc-2052864"
+    },
+    {
+      "title": "Pemphigus",
+      "doc_id": "doc-1209518"
+    },
+    {
+      "title": "Poxviridae",
+      "doc_id": "doc-1548205"
+    },
+    {
+      "title": "Radiation therapy",
+      "doc_id": "doc-26350"
+    },
+    {
+      "title": "Ross River fever",
+      "doc_id": "doc-2078908"
+    },
+    {
+      "title": "Social effects of H5N1",
+      "doc_id": "doc-4515987"
+    },
+    {
+      "title": "Vaccine",
+      "doc_id": "doc-32653"
+    }
+  ],
+  "sports": [
+    {
+      "title": "1934 FIFA World Cup qualification",
+      "doc_id": "doc-2327685"
+    },
+    {
+      "title": "1988–89 Yugoslav First League",
+      "doc_id": "doc-8199360"
+    },
+    {
+      "title": "1990 FIFA World Cup",
+      "doc_id": "doc-157232"
+    },
+    {
+      "title": "2002 FIFA World Cup seeding",
+      "doc_id": "doc-14481060"
+    },
+    {
+      "title": "2006 FIFA World Cup seeding",
+      "doc_id": "doc-5376102"
+    },
+    {
+      "title": "2014 FIFA World Cup seeding",
+      "doc_id": "doc-40808598"
+    },
+    {
+      "title": "2022 FIFA World Cup final",
+      "doc_id": "doc-70432805"
+    },
+    {
+      "title": "2022 FIFA World Cup officials",
+      "doc_id": "doc-72279931"
+    },
+    {
+      "title": "Alex Morgan",
+      "doc_id": "doc-20897682"
+    },
+    {
+      "title": "Association football",
+      "doc_id": "doc-10568"
+    },
+    {
+      "title": "Ballon d'Or",
+      "doc_id": "doc-398110"
+    },
+    {
+      "title": "Bernard Vukas",
+      "doc_id": "doc-4559487"
+    },
+    {
+      "title": "Cornelis August Wilhelm Hirschman",
+      "doc_id": "doc-29331027"
+    },
+    {
+      "title": "Davor Šuker",
+      "doc_id": "doc-610980"
+    },
+    {
+      "title": "England national football team",
+      "doc_id": "doc-9904"
+    },
+    {
+      "title": "FIFA Council",
+      "doc_id": "doc-26349067"
+    },
+    {
+      "title": "FIFA Female Player of the Century",
+      "doc_id": "doc-38414023"
+    },
+    {
+      "title": "FIFA World Cup",
+      "doc_id": "doc-11370"
+    },
+    {
+      "title": "Fulham F.C.",
+      "doc_id": "doc-11228"
+    },
+    {
+      "title": "Gianluca Pagliuca",
+      "doc_id": "doc-1234181"
+    },
+    {
+      "title": "Hamburger SV",
+      "doc_id": "doc-535879"
+    },
+    {
+      "title": "Issa Hayatou",
+      "doc_id": "doc-9431528"
+    },
+    {
+      "title": "Mattias Grafström",
+      "doc_id": "doc-75983123"
+    },
+    {
+      "title": "Megan Rapinoe",
+      "doc_id": "doc-21644506"
+    },
+    {
+      "title": "Mohamed Latif",
+      "doc_id": "doc-10150948"
+    },
+    {
+      "title": "Murtaz Khurtsilava",
+      "doc_id": "doc-6399700"
+    },
+    {
+      "title": "Pierre Littbarski",
+      "doc_id": "doc-2461077"
+    },
+    {
+      "title": "Salvatore Schillaci",
+      "doc_id": "doc-987976"
+    },
+    {
+      "title": "Throw-in",
+      "doc_id": "doc-2111524"
+    },
+    {
+      "title": "Triathlon",
+      "doc_id": "doc-31524"
+    },
+    {
+      "title": "Urs Linsi",
+      "doc_id": "doc-41081316"
+    },
+    {
+      "title": "Valentin Ivanov (footballer, born 1934)",
+      "doc_id": "doc-1619448"
+    },
+    {
+      "title": "Viking Thunder Clap",
+      "doc_id": "doc-57813319"
+    },
+    {
+      "title": "Women's football in Saudi Arabia",
+      "doc_id": "doc-35499845"
+    }
+  ],
+  "politics": [
+    {
+      "title": "18th BRICS summit",
+      "doc_id": "doc-82104946"
+    },
+    {
+      "title": "Bangladesh–Nigeria relations",
+      "doc_id": "doc-43037442"
+    },
+    {
+      "title": "BIMSTEC",
+      "doc_id": "doc-4028762"
+    },
+    {
+      "title": "Bosnia and Herzegovina",
+      "doc_id": "doc-3463"
+    },
+    {
+      "title": "Cambodian conflict (1812–1813)",
+      "doc_id": "doc-15444835"
+    },
+    {
+      "title": "Convention on Certain Conventional Weapons",
+      "doc_id": "doc-3111840"
+    },
+    {
+      "title": "European Political Community",
+      "doc_id": "doc-71707207"
+    },
+    {
+      "title": "Indian National Congress",
+      "doc_id": "doc-149333"
+    },
+    {
+      "title": "India–Libya relations",
+      "doc_id": "doc-38065993"
+    },
+    {
+      "title": "Interracial marriage",
+      "doc_id": "doc-3872186"
+    },
+    {
+      "title": "Ja Thak Wa uprising",
+      "doc_id": "doc-60076284"
+    },
+    {
+      "title": "Kazakhstan",
+      "doc_id": "doc-16642"
+    },
+    {
+      "title": "Malaysia",
+      "doc_id": "doc-3607937"
+    },
+    {
+      "title": "Middle East and North Africa",
+      "doc_id": "doc-2150475"
+    },
+    {
+      "title": "Nava Telangana",
+      "doc_id": "doc-46265417"
+    },
+    {
+      "title": "Palestine (region)",
+      "doc_id": "doc-1114732"
+    },
+    {
+      "title": "Press Registrar General of India",
+      "doc_id": "doc-9646367"
+    },
+    {
+      "title": "States of Germany",
+      "doc_id": "doc-217450"
+    },
+    {
+      "title": "Sweden",
+      "doc_id": "doc-5058739"
+    },
+    {
+      "title": "Tonkin (French protectorate)",
+      "doc_id": "doc-51274655"
+    },
+    {
+      "title": "Tonkin campaign",
+      "doc_id": "doc-19312285"
+    },
+    {
+      "title": "Vietnam",
+      "doc_id": "doc-202354"
+    }
+  ]
+}

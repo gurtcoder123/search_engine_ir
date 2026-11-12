@@ -1,0 +1,3 @@
+# Preserve the exact saved corpus/artifact bytes on every operating system.
+/project/Pre-Processing/** -text whitespace=cr-at-eol
+/project/evaluation_judgments.json -text whitespace=cr-at-eol

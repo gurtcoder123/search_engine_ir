@@ -472,8 +472,10 @@ query's relevant-set size. Macro F1 is the mean of per-query F1 values, not
 the harmonic mean of macro precision and recall. Query timing excludes loading,
 printing and interactive input. Memory uses tracemalloc peak during loading
 plus a query pass; it is NOT process RSS. Run timing without concurrent tests.
-Generated data/results remain local and Git-ignored. The evaluation module and
-metric arithmetic tests are ordinary implementation code.
+The saved corpus, token files and indexes are versioned in project/Pre-Processing/.
+The reference experiment summary is results/attack_summary.json. Recreated
+experiment directories under output/ remain Git-ignored, along with reports
+and temporary files. The evaluation module and metric tests are versioned code.
 
 ## 10. Adversarial experiment
 

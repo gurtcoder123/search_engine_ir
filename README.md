@@ -11,13 +11,16 @@ Members: Vignesh K S (2024A7PS0571P) and Thanishka Thatikonda (2024ADPS0041P).
 Use Python 3.10 or newer. Run commands from the repository root:
 
 ~~~powershell
+git clone https://github.com/gurtcoder123/search_engine_ir.git
+cd search_engine_ir
 python -m pip install -r project/requirements.txt
-python -X utf8 -m project.preprocess
 python -X utf8 -m project.search
 ~~~
 
-These commands expect the reviewed corpus in project/Pre-Processing/.
-Generated data is Git-ignored and supplied separately in the submission bundle.
+The reviewed corpus and precomputed artifacts are included in
+project/Pre-Processing/. After installing dependencies, you can search directly
+without crawling or rebuilding. Run preprocess to reproduce the offline build.
+Use python -X utf8 -m project.preprocess from the repository root for that rebuild.
 The corpus contains saved Wikipedia extracts, source URLs, revision IDs and
 outgoing link titles. No API calls occur during search or evaluation.
 
@@ -103,7 +106,8 @@ model changes. Control-to-attacked isolates the added links: text features and
 topic probabilities are identical between those two conditions. summary.json
 records metrics, changes, target scores/positions, corpus/judgment hashes and
 a descriptive lexical-weight sweep. The sweep is development-set analysis,
-not held-out tuning. Re-running writes only the experiment outputs.
+not held-out tuning. Re-running writes only the experiment outputs. The saved
+reference run is versioned in results/attack_summary.json.
 
 Precision uses hits/K even for short lists; recall uses the fixed relevant set.
 Reported F1 is the mean of per-query F1. Binary NDCG also measures result order.

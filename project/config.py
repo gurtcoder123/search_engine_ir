@@ -18,7 +18,7 @@ USER_AGENT = (
     "(educational project; https://github.com/gurtcoder123/search_engine_ir)"
 )
 
-# Downloaded JSON stays local and is Git-ignored.
+# Saved corpus and offline artifacts are versioned for reproducible searches.
 PREPROCESSING_DIR = Path(__file__).resolve().parent / "Pre-Processing"
 DOCUMENTS_DIR = PREPROCESSING_DIR / "Documents"
 COLLECTION_FILE = PREPROCESSING_DIR / "Document_Collection.json"

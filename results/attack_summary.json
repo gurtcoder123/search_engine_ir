@@ -1,0 +1,4392 @@
+{
+  "created_at": "2026-11-12T08:30:58.910398+00:00",
+  "source_corpus_sha256": "95ac75c4f34582414409165afecff1287c11bc3c63c102906221f82e3f30cfc3",
+  "judgments_sha256": "372a3b6a8ad30363ea51aa03f7415cb3aca9b6928f6a9f2129157e3ca1b2e8f3",
+  "judgment_provenance": "Assistant-generated preliminary binary content judgments; not independently human validated.",
+  "target": {
+    "doc_id": "doc-31524",
+    "title": "Triathlon",
+    "topic": "sports"
+  },
+  "farm_size": 10,
+  "k": 10,
+  "lexical_weight": 0.9,
+  "target_nonrelevant_matching_queries": [
+    "Q07"
+  ],
+  "attack": "Same-topic duplicate-text farm; each synthetic page links only to the target.",
+  "control": "Identical farm text/labels/IDs and corpus size, but farm pages have no outgoing links.",
+  "caveat": "Clean-to-attacked includes corpus/IDF/topic-model changes; control-to-attacked isolates the added links.",
+  "weight_sweep_scope": "Descriptive development-set sensitivity; default weight fixed at 0.9 before measurements.",
+  "conditions": {
+    "clean": {
+      "documents": 162,
+      "internal_links": 715,
+      "vocabulary": 8703,
+      "tfidf_nonzeros": 28119,
+      "build_seconds_excluding_imports": 1.8777561999995669,
+      "convergence": {
+        "global": {
+          "iterations": 86,
+          "max_change": 9.008203915444879e-09,
+          "converged": true
+        },
+        "topics": {
+          "technology": {
+            "iterations": 46,
+            "max_change": 9.522783353532738e-09,
+            "converged": true
+          },
+          "science": {
+            "iterations": 94,
+            "max_change": 8.539867049628391e-09,
+            "converged": true
+          },
+          "health_and_medicine": {
+            "iterations": 46,
+            "max_change": 9.747135848447996e-09,
+            "converged": true
+          },
+          "sports": {
+            "iterations": 63,
+            "max_change": 8.204272233802712e-09,
+            "converged": true
+          },
+          "politics": {
+            "iterations": 55,
+            "max_change": 8.917773269834228e-09,
+            "converged": true
+          }
+        }
+      },
+      "global_target_score": 0.010298326974412887,
+      "topic_target_score": 0.033810288178358086,
+      "systems": {
+        "tfidf": {
+          "macro_precision": 0.6,
+          "macro_recall": 0.9227272727272726,
+          "macro_f1": 0.6976053916843391,
+          "macro_ndcg": 0.9301359888389099,
+          "mean_query_ms": 0.6671019999521377,
+          "median_query_ms": 0.6398499990609707,
+          "p95_query_ms": 1.0211700003310398,
+          "peak_traced_mib": 15.337918281555176,
+          "instrumented_load_seconds": 0.49673710000024585,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1164",
+                "doc-1167455",
+                "doc-58714104",
+                "doc-48795986",
+                "doc-74329563",
+                "doc-71642695",
+                "doc-21391751",
+                "doc-203619",
+                "doc-79558416",
+                "doc-1706303"
+              ],
+              "precision": 0.9,
+              "recall": 0.8181818181818182,
+              "f1": 0.8571428571428572,
+              "hits": 9,
+              "ndcg": 0.9148568823583791
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-34655748",
+                "doc-18421258",
+                "doc-72557062",
+                "doc-48795986",
+                "doc-43037442",
+                "doc-58714104",
+                "doc-79558416",
+                "doc-909036",
+                "doc-805870",
+                "doc-29331027"
+              ],
+              "precision": 0.3,
+              "recall": 1.0,
+              "f1": 0.4615384615384615,
+              "hits": 3,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-81649308",
+                "doc-32074177",
+                "doc-8356138",
+                "doc-241033",
+                "doc-21485",
+                "doc-46542792",
+                "doc-3415504",
+                "doc-241029",
+                "doc-23259",
+                "doc-1430548"
+              ],
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.7499999999999999,
+              "hits": 6,
+              "ndcg": 0.9930783166417602
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-1614492",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-29564581",
+                "doc-35412202",
+                "doc-202354",
+                "doc-241033",
+                "doc-23259",
+                "doc-709427"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-302755",
+                "doc-40817590",
+                "doc-2052864",
+                "doc-44794841",
+                "doc-6944726",
+                "doc-1432191",
+                "doc-2078908",
+                "doc-1548205",
+                "doc-59171",
+                "doc-22555940"
+              ],
+              "precision": 1.0,
+              "recall": 0.9090909090909091,
+              "f1": 0.9523809523809523,
+              "hits": 10,
+              "ndcg": 1.0000000000000002
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-684811",
+                "doc-2933134",
+                "doc-649760",
+                "doc-40817590",
+                "doc-228845",
+                "doc-3820402",
+                "doc-44794841",
+                "doc-48395"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.975788054854922
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-5376102",
+                "doc-14481060",
+                "doc-40808598",
+                "doc-11370",
+                "doc-2327685",
+                "doc-72279931",
+                "doc-157232",
+                "doc-9904",
+                "doc-35499845",
+                "doc-70432805"
+              ],
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.888888888888889,
+              "hits": 8,
+              "ndcg": 0.9933222998814618
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-35499845",
+                "doc-21644506",
+                "doc-20897682",
+                "doc-38414023",
+                "doc-50606739",
+                "doc-535879",
+                "doc-10568",
+                "doc-398110",
+                "doc-6399700",
+                "doc-2111524"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-43037442",
+                "doc-38065993",
+                "doc-4028762",
+                "doc-82104946",
+                "doc-71707207",
+                "doc-243062",
+                "doc-16642",
+                "doc-15444835",
+                "doc-4515987",
+                "doc-3607937"
+              ],
+              "precision": 0.5,
+              "recall": 0.8333333333333334,
+              "f1": 0.625,
+              "hits": 5,
+              "ndcg": 0.892210845475489
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-46265417",
+                "doc-71707207",
+                "doc-149333",
+                "doc-217450",
+                "doc-3607937",
+                "doc-16642",
+                "doc-909036",
+                "doc-38065993",
+                "doc-202354",
+                "doc-9646367"
+              ],
+              "precision": 0.6,
+              "recall": 0.6666666666666666,
+              "f1": 0.631578947368421,
+              "hits": 6,
+              "ndcg": 0.5321034891770867
+            }
+          ]
+        },
+        "pagerank": {
+          "macro_precision": 0.22000000000000003,
+          "macro_recall": 0.29401515151515156,
+          "macro_f1": 0.2418253968253968,
+          "macro_ndcg": 0.261079950379585,
+          "mean_query_ms": 0.611393333383603,
+          "median_query_ms": 0.5861999998160172,
+          "p95_query_ms": 0.8592599998337392,
+          "peak_traced_mib": 15.33647632598877,
+          "instrumented_load_seconds": 0.4112624000008509,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-1167455",
+                "doc-18879",
+                "doc-74329563",
+                "doc-58714104",
+                "doc-71642695",
+                "doc-21485"
+              ],
+              "precision": 0.6,
+              "recall": 0.5454545454545454,
+              "f1": 0.5714285714285713,
+              "hits": 6,
+              "ndcg": 0.5645252544249328
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-294894",
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-35412202",
+                "doc-18879",
+                "doc-58714104",
+                "doc-23862",
+                "doc-203619"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-367654",
+                "doc-406804",
+                "doc-257243",
+                "doc-241029",
+                "doc-50606739",
+                "doc-46542792"
+              ],
+              "precision": 0.2,
+              "recall": 0.3333333333333333,
+              "f1": 0.25,
+              "hits": 2,
+              "ndcg": 0.3422220729283414
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-325806",
+                "doc-35412202",
+                "doc-23259",
+                "doc-21485",
+                "doc-1706303",
+                "doc-241033",
+                "doc-1430548",
+                "doc-257243",
+                "doc-241029"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.24630238874073
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1548205",
+                "doc-32653",
+                "doc-649760",
+                "doc-210242",
+                "doc-44794841",
+                "doc-1432191",
+                "doc-59171",
+                "doc-2052864",
+                "doc-2859941",
+                "doc-2078908"
+              ],
+              "precision": 0.7,
+              "recall": 0.6363636363636364,
+              "f1": 0.6666666666666666,
+              "hits": 7,
+              "ndcg": 0.6563033086078547
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-18993825",
+                "doc-48395",
+                "doc-649760",
+                "doc-3702720",
+                "doc-12514534",
+                "doc-44794841",
+                "doc-684811",
+                "doc-2933134",
+                "doc-1432191",
+                "doc-59171"
+              ],
+              "precision": 0.4,
+              "recall": 0.8,
+              "f1": 0.5333333333333333,
+              "hits": 4,
+              "ndcg": 0.4973199614801841
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-193513",
+                "doc-243062",
+                "doc-48795986",
+                "doc-38414023",
+                "doc-1167455",
+                "doc-13745451"
+              ],
+              "precision": 0.1,
+              "recall": 0.125,
+              "f1": 0.11111111111111112,
+              "hits": 1,
+              "ndcg": 0.1089364926177559
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-58714104",
+                "doc-157232",
+                "doc-57813319",
+                "doc-2111524",
+                "doc-9904",
+                "doc-41081316",
+                "doc-75983123"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.19519002499605084
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-243062",
+                "doc-13745451",
+                "doc-48361",
+                "doc-58714104",
+                "doc-9904",
+                "doc-41081316"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-173070",
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-1164",
+                "doc-193513",
+                "doc-243062",
+                "doc-48795986",
+                "doc-38414023"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            }
+          ]
+        },
+        "tspr": {
+          "macro_precision": 0.36,
+          "macro_recall": 0.5308080808080808,
+          "macro_f1": 0.41066448171711334,
+          "macro_ndcg": 0.4538838043463634,
+          "mean_query_ms": 0.6970109999747365,
+          "median_query_ms": 0.6259000010686577,
+          "p95_query_ms": 1.0877349999645958,
+          "peak_traced_mib": 15.33647632598877,
+          "instrumented_load_seconds": 0.31370330000027025,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-1167455",
+                "doc-48795986",
+                "doc-58714104",
+                "doc-71642695",
+                "doc-74329563",
+                "doc-1706303",
+                "doc-203619"
+              ],
+              "precision": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762,
+              "hits": 8,
+              "ndcg": 0.7104770117651427
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-294894",
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-23862",
+                "doc-58714104",
+                "doc-35412202",
+                "doc-203619",
+                "doc-18421258"
+              ],
+              "precision": 0.1,
+              "recall": 0.3333333333333333,
+              "f1": 0.15384615384615383,
+              "hits": 1,
+              "ndcg": 0.13565197343244778
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-367654",
+                "doc-257243",
+                "doc-241029",
+                "doc-46542792",
+                "doc-147853",
+                "doc-8356138"
+              ],
+              "precision": 0.3,
+              "recall": 0.5,
+              "f1": 0.37499999999999994,
+              "hits": 3,
+              "ndcg": 0.4296937870297496
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-257243",
+                "doc-241029",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-1614492"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 0.7438924904678291
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1548205",
+                "doc-32653",
+                "doc-44794841",
+                "doc-210242",
+                "doc-649760",
+                "doc-1432191",
+                "doc-2052864",
+                "doc-2859941",
+                "doc-2078908",
+                "doc-59171"
+              ],
+              "precision": 0.7,
+              "recall": 0.6363636363636364,
+              "f1": 0.6666666666666666,
+              "hits": 7,
+              "ndcg": 0.6812060741152738
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-44794841",
+                "doc-684811",
+                "doc-649760",
+                "doc-2933134",
+                "doc-1432191",
+                "doc-59171",
+                "doc-228845",
+                "doc-3820402"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.9180654083817015
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-157232",
+                "doc-31524",
+                "doc-57813319",
+                "doc-9904",
+                "doc-41081316",
+                "doc-75983123",
+                "doc-26349067"
+              ],
+              "precision": 0.2,
+              "recall": 0.25,
+              "f1": 0.22222222222222224,
+              "hits": 2,
+              "ndcg": 0.26852556974265224
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-157232",
+                "doc-57813319",
+                "doc-2111524",
+                "doc-9904",
+                "doc-41081316",
+                "doc-75983123",
+                "doc-26349067"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.19519002499605084
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-202354",
+                "doc-48361",
+                "doc-16642",
+                "doc-294894",
+                "doc-909036",
+                "doc-3607937",
+                "doc-11370",
+                "doc-3111840",
+                "doc-3872186"
+              ],
+              "precision": 0.1,
+              "recall": 0.16666666666666666,
+              "f1": 0.125,
+              "hits": 1,
+              "ndcg": 0.09109240322345806
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-173070",
+                "doc-10568",
+                "doc-51274655",
+                "doc-202354",
+                "doc-19312285",
+                "doc-48361",
+                "doc-16642",
+                "doc-294894",
+                "doc-60076284",
+                "doc-5058739"
+              ],
+              "precision": 0.4,
+              "recall": 0.4444444444444444,
+              "f1": 0.4210526315789474,
+              "hits": 4,
+              "ndcg": 0.3650433003093288
+            }
+          ]
+        },
+        "hybrid": {
+          "macro_precision": 0.5600000000000002,
+          "macro_recall": 0.8747474747474747,
+          "macro_f1": 0.6545289505815822,
+          "macro_ndcg": 0.8788480997372057,
+          "mean_query_ms": 0.7534970000233443,
+          "median_query_ms": 0.653049999527866,
+          "p95_query_ms": 1.2627649993191883,
+          "peak_traced_mib": 15.336420059204102,
+          "instrumented_load_seconds": 0.37881970000125875,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1164",
+                "doc-1167455",
+                "doc-58714104",
+                "doc-48795986",
+                "doc-74329563",
+                "doc-909036",
+                "doc-71642695",
+                "doc-73248112",
+                "doc-203619",
+                "doc-1706303"
+              ],
+              "precision": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762,
+              "hits": 8,
+              "ndcg": 0.836458613379704
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-34655748",
+                "doc-18421258",
+                "doc-72557062",
+                "doc-294894",
+                "doc-909036",
+                "doc-48795986",
+                "doc-58714104",
+                "doc-73248112",
+                "doc-1164",
+                "doc-79558416"
+              ],
+              "precision": 0.3,
+              "recall": 1.0,
+              "f1": 0.4615384615384615,
+              "hits": 3,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-81649308",
+                "doc-32074177",
+                "doc-21485",
+                "doc-241033",
+                "doc-8356138",
+                "doc-46542792",
+                "doc-23259",
+                "doc-3415504",
+                "doc-241029",
+                "doc-1430548"
+              ],
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.7499999999999999,
+              "hits": 6,
+              "ndcg": 0.9876712785649564
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-1614492",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-29564581",
+                "doc-1430548",
+                "doc-257243"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-302755",
+                "doc-40817590",
+                "doc-2052864",
+                "doc-44794841",
+                "doc-6944726",
+                "doc-1432191",
+                "doc-2078908",
+                "doc-1548205",
+                "doc-59171",
+                "doc-22555940"
+              ],
+              "precision": 1.0,
+              "recall": 0.9090909090909091,
+              "f1": 0.9523809523809523,
+              "hits": 10,
+              "ndcg": 1.0000000000000002
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-684811",
+                "doc-2933134",
+                "doc-649760",
+                "doc-40817590",
+                "doc-228845",
+                "doc-44794841",
+                "doc-3820402",
+                "doc-1432191"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.9708923176105698
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-5376102",
+                "doc-14481060",
+                "doc-40808598",
+                "doc-11370",
+                "doc-10568",
+                "doc-2327685",
+                "doc-72279931",
+                "doc-157232",
+                "doc-9904",
+                "doc-70432805"
+              ],
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.888888888888889,
+              "hits": 8,
+              "ndcg": 0.9752652438087496
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-35499845",
+                "doc-10568",
+                "doc-38414023",
+                "doc-21644506",
+                "doc-20897682",
+                "doc-11370",
+                "doc-50606739",
+                "doc-2111524",
+                "doc-535879",
+                "doc-398110"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 0.9047172294870751
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-43037442",
+                "doc-38065993",
+                "doc-10568",
+                "doc-16642",
+                "doc-4028762",
+                "doc-202354",
+                "doc-82104946",
+                "doc-48361",
+                "doc-294894",
+                "doc-3607937"
+              ],
+              "precision": 0.4,
+              "recall": 0.6666666666666666,
+              "f1": 0.5,
+              "hits": 4,
+              "ndcg": 0.7114533439819829
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-46265417",
+                "doc-16642",
+                "doc-10568",
+                "doc-202354",
+                "doc-71707207",
+                "doc-173070",
+                "doc-149333",
+                "doc-51274655",
+                "doc-48361",
+                "doc-909036"
+              ],
+              "precision": 0.4,
+              "recall": 0.4444444444444444,
+              "f1": 0.4210526315789474,
+              "hits": 4,
+              "ndcg": 0.402022970539019
+            }
+          ]
+        }
+      },
+      "target_positions": {
+        "tfidf": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 56,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.0039205326049756425,
+            "cosine": 0.0039205326049756425,
+            "link_score": 0.0
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "pagerank": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 15,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.010298326974412887,
+            "cosine": 0.0039205326049756425,
+            "link_score": 0.010298326974412887
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "tspr": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 5,
+            "in_top_k": true,
+            "relevant": false,
+            "score": 0.03381014671513166,
+            "cosine": 0.0039205326049756425,
+            "link_score": 0.03381014671513166
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "hybrid": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 35,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.02542143346110032,
+            "cosine": 0.0039205326049756425,
+            "link_score": 0.03381014671513166
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ]
+      },
+      "weight_sweep": [
+        {
+          "lexical_weight": 0.0,
+          "macro_precision": 0.36,
+          "macro_recall": 0.5308080808080808,
+          "macro_f1": 0.41066448171711334,
+          "macro_ndcg": 0.4538838043463634
+        },
+        {
+          "lexical_weight": 0.5,
+          "macro_precision": 0.4800000000000001,
+          "macro_recall": 0.7331565656565656,
+          "macro_f1": 0.5544892680418998,
+          "macro_ndcg": 0.6244943586612091
+        },
+        {
+          "lexical_weight": 0.7,
+          "macro_precision": 0.51,
+          "macro_recall": 0.8031565656565656,
+          "macro_f1": 0.5963940299466616,
+          "macro_ndcg": 0.7053262761603085
+        },
+        {
+          "lexical_weight": 0.85,
+          "macro_precision": 0.55,
+          "macro_recall": 0.8622474747474748,
+          "macro_f1": 0.643417839470471,
+          "macro_ndcg": 0.8212110010601628
+        },
+        {
+          "lexical_weight": 0.9,
+          "macro_precision": 0.5600000000000002,
+          "macro_recall": 0.8747474747474747,
+          "macro_f1": 0.6545289505815822,
+          "macro_ndcg": 0.8788480997372057
+        },
+        {
+          "lexical_weight": 0.95,
+          "macro_precision": 0.5900000000000001,
+          "macro_recall": 0.9136363636363637,
+          "macro_f1": 0.6880815821605296,
+          "macro_ndcg": 0.9106977456559328
+        },
+        {
+          "lexical_weight": 1.0,
+          "macro_precision": 0.6,
+          "macro_recall": 0.9227272727272726,
+          "macro_f1": 0.6976053916843391,
+          "macro_ndcg": 0.9301359888389099
+        }
+      ]
+    },
+    "control": {
+      "documents": 172,
+      "internal_links": 715,
+      "vocabulary": 8703,
+      "tfidf_nonzeros": 29799,
+      "build_seconds_excluding_imports": 1.9701101999999082,
+      "convergence": {
+        "global": {
+          "iterations": 86,
+          "max_change": 8.057911900227754e-09,
+          "converged": true
+        },
+        "topics": {
+          "technology": {
+            "iterations": 46,
+            "max_change": 9.522783353532738e-09,
+            "converged": true
+          },
+          "science": {
+            "iterations": 94,
+            "max_change": 8.539867049628391e-09,
+            "converged": true
+          },
+          "health_and_medicine": {
+            "iterations": 46,
+            "max_change": 9.747135848447996e-09,
+            "converged": true
+          },
+          "sports": {
+            "iterations": 63,
+            "max_change": 8.280443414276917e-09,
+            "converged": true
+          },
+          "politics": {
+            "iterations": 55,
+            "max_change": 8.917773269834228e-09,
+            "converged": true
+          }
+        }
+      },
+      "global_target_score": 0.010180727282529596,
+      "topic_target_score": 0.032320347408829754,
+      "systems": {
+        "tfidf": {
+          "macro_precision": 0.6,
+          "macro_recall": 0.9227272727272726,
+          "macro_f1": 0.6976053916843391,
+          "macro_ndcg": 0.9301359888389099,
+          "mean_query_ms": 0.7298336666705533,
+          "median_query_ms": 0.688250001076085,
+          "p95_query_ms": 1.1449999998148999,
+          "peak_traced_mib": 15.759854316711426,
+          "instrumented_load_seconds": 0.4417439999997441,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1164",
+                "doc-1167455",
+                "doc-58714104",
+                "doc-48795986",
+                "doc-74329563",
+                "doc-71642695",
+                "doc-21391751",
+                "doc-203619",
+                "doc-79558416",
+                "doc-1706303"
+              ],
+              "precision": 0.9,
+              "recall": 0.8181818181818182,
+              "f1": 0.8571428571428572,
+              "hits": 9,
+              "ndcg": 0.9148568823583791
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-34655748",
+                "doc-18421258",
+                "doc-72557062",
+                "doc-48795986",
+                "doc-43037442",
+                "doc-58714104",
+                "doc-79558416",
+                "doc-909036",
+                "doc-805870",
+                "doc-29331027"
+              ],
+              "precision": 0.3,
+              "recall": 1.0,
+              "f1": 0.4615384615384615,
+              "hits": 3,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-81649308",
+                "doc-32074177",
+                "doc-8356138",
+                "doc-241033",
+                "doc-21485",
+                "doc-46542792",
+                "doc-3415504",
+                "doc-241029",
+                "doc-23259",
+                "doc-1430548"
+              ],
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.7499999999999999,
+              "hits": 6,
+              "ndcg": 0.9930783166417602
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-1614492",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-29564581",
+                "doc-35412202",
+                "doc-202354",
+                "doc-241033",
+                "doc-23259",
+                "doc-709427"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-302755",
+                "doc-40817590",
+                "doc-2052864",
+                "doc-44794841",
+                "doc-6944726",
+                "doc-1432191",
+                "doc-2078908",
+                "doc-1548205",
+                "doc-59171",
+                "doc-22555940"
+              ],
+              "precision": 1.0,
+              "recall": 0.9090909090909091,
+              "f1": 0.9523809523809523,
+              "hits": 10,
+              "ndcg": 1.0000000000000002
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-684811",
+                "doc-2933134",
+                "doc-649760",
+                "doc-40817590",
+                "doc-228845",
+                "doc-3820402",
+                "doc-44794841",
+                "doc-48395"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.975788054854922
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-5376102",
+                "doc-14481060",
+                "doc-40808598",
+                "doc-11370",
+                "doc-2327685",
+                "doc-72279931",
+                "doc-157232",
+                "doc-9904",
+                "doc-35499845",
+                "doc-70432805"
+              ],
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.888888888888889,
+              "hits": 8,
+              "ndcg": 0.9933222998814618
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-35499845",
+                "doc-21644506",
+                "doc-20897682",
+                "doc-38414023",
+                "doc-50606739",
+                "doc-535879",
+                "doc-10568",
+                "doc-398110",
+                "doc-6399700",
+                "doc-2111524"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-43037442",
+                "doc-38065993",
+                "doc-4028762",
+                "doc-82104946",
+                "doc-71707207",
+                "doc-243062",
+                "doc-16642",
+                "doc-4515987",
+                "doc-15444835",
+                "doc-3607937"
+              ],
+              "precision": 0.5,
+              "recall": 0.8333333333333334,
+              "f1": 0.625,
+              "hits": 5,
+              "ndcg": 0.892210845475489
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-46265417",
+                "doc-71707207",
+                "doc-149333",
+                "doc-217450",
+                "doc-3607937",
+                "doc-16642",
+                "doc-909036",
+                "doc-38065993",
+                "doc-202354",
+                "doc-9646367"
+              ],
+              "precision": 0.6,
+              "recall": 0.6666666666666666,
+              "f1": 0.631578947368421,
+              "hits": 6,
+              "ndcg": 0.5321034891770867
+            }
+          ]
+        },
+        "pagerank": {
+          "macro_precision": 0.22000000000000003,
+          "macro_recall": 0.29401515151515156,
+          "macro_f1": 0.2418253968253968,
+          "macro_ndcg": 0.261079950379585,
+          "mean_query_ms": 0.6500280000000203,
+          "median_query_ms": 0.5991499992887839,
+          "p95_query_ms": 1.0693650007851832,
+          "peak_traced_mib": 15.758313179016113,
+          "instrumented_load_seconds": 0.39900440000019444,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-1167455",
+                "doc-18879",
+                "doc-74329563",
+                "doc-58714104",
+                "doc-71642695",
+                "doc-21485"
+              ],
+              "precision": 0.6,
+              "recall": 0.5454545454545454,
+              "f1": 0.5714285714285713,
+              "hits": 6,
+              "ndcg": 0.5645252544249328
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-294894",
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-35412202",
+                "doc-18879",
+                "doc-58714104",
+                "doc-23862",
+                "doc-203619"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-367654",
+                "doc-406804",
+                "doc-257243",
+                "doc-241029",
+                "doc-50606739",
+                "doc-46542792"
+              ],
+              "precision": 0.2,
+              "recall": 0.3333333333333333,
+              "f1": 0.25,
+              "hits": 2,
+              "ndcg": 0.3422220729283414
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-325806",
+                "doc-35412202",
+                "doc-23259",
+                "doc-21485",
+                "doc-1706303",
+                "doc-241033",
+                "doc-1430548",
+                "doc-257243",
+                "doc-241029"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.24630238874073
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1548205",
+                "doc-32653",
+                "doc-649760",
+                "doc-210242",
+                "doc-44794841",
+                "doc-1432191",
+                "doc-59171",
+                "doc-2052864",
+                "doc-2859941",
+                "doc-2078908"
+              ],
+              "precision": 0.7,
+              "recall": 0.6363636363636364,
+              "f1": 0.6666666666666666,
+              "hits": 7,
+              "ndcg": 0.6563033086078547
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-18993825",
+                "doc-48395",
+                "doc-649760",
+                "doc-3702720",
+                "doc-12514534",
+                "doc-44794841",
+                "doc-684811",
+                "doc-2933134",
+                "doc-1432191",
+                "doc-59171"
+              ],
+              "precision": 0.4,
+              "recall": 0.8,
+              "f1": 0.5333333333333333,
+              "hits": 4,
+              "ndcg": 0.4973199614801841
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-193513",
+                "doc-243062",
+                "doc-48795986",
+                "doc-38414023",
+                "doc-1167455",
+                "doc-13745451"
+              ],
+              "precision": 0.1,
+              "recall": 0.125,
+              "f1": 0.11111111111111112,
+              "hits": 1,
+              "ndcg": 0.1089364926177559
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-58714104",
+                "doc-157232",
+                "doc-57813319",
+                "doc-2111524",
+                "doc-9904",
+                "doc-41081316",
+                "doc-75983123"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.19519002499605084
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-243062",
+                "doc-13745451",
+                "doc-48361",
+                "doc-58714104",
+                "doc-9904",
+                "doc-41081316"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-173070",
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-1164",
+                "doc-193513",
+                "doc-243062",
+                "doc-48795986",
+                "doc-38414023"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            }
+          ]
+        },
+        "tspr": {
+          "macro_precision": 0.36,
+          "macro_recall": 0.5308080808080808,
+          "macro_f1": 0.41066448171711334,
+          "macro_ndcg": 0.4538838043463634,
+          "mean_query_ms": 0.755427333363817,
+          "median_query_ms": 0.7022999998298474,
+          "p95_query_ms": 1.1210149990802167,
+          "peak_traced_mib": 15.758313179016113,
+          "instrumented_load_seconds": 0.32161380000070494,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-1167455",
+                "doc-48795986",
+                "doc-58714104",
+                "doc-71642695",
+                "doc-74329563",
+                "doc-1706303",
+                "doc-203619"
+              ],
+              "precision": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762,
+              "hits": 8,
+              "ndcg": 0.7104770117651427
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-294894",
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-23862",
+                "doc-58714104",
+                "doc-35412202",
+                "doc-203619",
+                "doc-18421258"
+              ],
+              "precision": 0.1,
+              "recall": 0.3333333333333333,
+              "f1": 0.15384615384615383,
+              "hits": 1,
+              "ndcg": 0.13565197343244778
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-367654",
+                "doc-257243",
+                "doc-241029",
+                "doc-46542792",
+                "doc-147853",
+                "doc-8356138"
+              ],
+              "precision": 0.3,
+              "recall": 0.5,
+              "f1": 0.37499999999999994,
+              "hits": 3,
+              "ndcg": 0.4296937870297496
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-257243",
+                "doc-241029",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-1614492"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 0.7438924904678291
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1548205",
+                "doc-32653",
+                "doc-44794841",
+                "doc-210242",
+                "doc-649760",
+                "doc-1432191",
+                "doc-2052864",
+                "doc-2859941",
+                "doc-2078908",
+                "doc-59171"
+              ],
+              "precision": 0.7,
+              "recall": 0.6363636363636364,
+              "f1": 0.6666666666666666,
+              "hits": 7,
+              "ndcg": 0.6812060741152738
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-44794841",
+                "doc-684811",
+                "doc-649760",
+                "doc-2933134",
+                "doc-1432191",
+                "doc-59171",
+                "doc-228845",
+                "doc-3820402"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.9180654083817015
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-157232",
+                "doc-31524",
+                "doc-57813319",
+                "doc-9904",
+                "doc-41081316",
+                "doc-75983123",
+                "doc-26349067"
+              ],
+              "precision": 0.2,
+              "recall": 0.25,
+              "f1": 0.22222222222222224,
+              "hits": 2,
+              "ndcg": 0.26852556974265224
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-157232",
+                "doc-57813319",
+                "doc-2111524",
+                "doc-9904",
+                "doc-41081316",
+                "doc-75983123",
+                "doc-26349067"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.19519002499605084
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-202354",
+                "doc-48361",
+                "doc-16642",
+                "doc-294894",
+                "doc-909036",
+                "doc-3607937",
+                "doc-11370",
+                "doc-3111840",
+                "doc-3872186"
+              ],
+              "precision": 0.1,
+              "recall": 0.16666666666666666,
+              "f1": 0.125,
+              "hits": 1,
+              "ndcg": 0.09109240322345806
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-173070",
+                "doc-10568",
+                "doc-51274655",
+                "doc-202354",
+                "doc-19312285",
+                "doc-48361",
+                "doc-16642",
+                "doc-294894",
+                "doc-60076284",
+                "doc-5058739"
+              ],
+              "precision": 0.4,
+              "recall": 0.4444444444444444,
+              "f1": 0.4210526315789474,
+              "hits": 4,
+              "ndcg": 0.3650433003093288
+            }
+          ]
+        },
+        "hybrid": {
+          "macro_precision": 0.5600000000000002,
+          "macro_recall": 0.8747474747474747,
+          "macro_f1": 0.6545289505815822,
+          "macro_ndcg": 0.8788480997372057,
+          "mean_query_ms": 0.8624383334245067,
+          "median_query_ms": 0.8387999996557483,
+          "p95_query_ms": 1.2461549999898127,
+          "peak_traced_mib": 15.758256912231445,
+          "instrumented_load_seconds": 0.4117480999993859,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1164",
+                "doc-1167455",
+                "doc-58714104",
+                "doc-48795986",
+                "doc-74329563",
+                "doc-909036",
+                "doc-71642695",
+                "doc-73248112",
+                "doc-203619",
+                "doc-1706303"
+              ],
+              "precision": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762,
+              "hits": 8,
+              "ndcg": 0.836458613379704
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-34655748",
+                "doc-18421258",
+                "doc-72557062",
+                "doc-294894",
+                "doc-909036",
+                "doc-48795986",
+                "doc-58714104",
+                "doc-73248112",
+                "doc-1164",
+                "doc-79558416"
+              ],
+              "precision": 0.3,
+              "recall": 1.0,
+              "f1": 0.4615384615384615,
+              "hits": 3,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-81649308",
+                "doc-21485",
+                "doc-32074177",
+                "doc-241033",
+                "doc-8356138",
+                "doc-46542792",
+                "doc-23259",
+                "doc-3415504",
+                "doc-241029",
+                "doc-1430548"
+              ],
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.7499999999999999,
+              "hits": 6,
+              "ndcg": 0.9876712785649564
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-1614492",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-29564581",
+                "doc-1430548",
+                "doc-257243"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-302755",
+                "doc-40817590",
+                "doc-2052864",
+                "doc-44794841",
+                "doc-6944726",
+                "doc-1432191",
+                "doc-2078908",
+                "doc-1548205",
+                "doc-59171",
+                "doc-22555940"
+              ],
+              "precision": 1.0,
+              "recall": 0.9090909090909091,
+              "f1": 0.9523809523809523,
+              "hits": 10,
+              "ndcg": 1.0000000000000002
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-684811",
+                "doc-2933134",
+                "doc-649760",
+                "doc-40817590",
+                "doc-228845",
+                "doc-44794841",
+                "doc-3820402",
+                "doc-1432191"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.9708923176105698
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-5376102",
+                "doc-14481060",
+                "doc-40808598",
+                "doc-11370",
+                "doc-10568",
+                "doc-2327685",
+                "doc-72279931",
+                "doc-157232",
+                "doc-9904",
+                "doc-70432805"
+              ],
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.888888888888889,
+              "hits": 8,
+              "ndcg": 0.9752652438087496
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-35499845",
+                "doc-10568",
+                "doc-38414023",
+                "doc-21644506",
+                "doc-20897682",
+                "doc-11370",
+                "doc-50606739",
+                "doc-2111524",
+                "doc-535879",
+                "doc-398110"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 0.9047172294870751
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-43037442",
+                "doc-38065993",
+                "doc-16642",
+                "doc-10568",
+                "doc-4028762",
+                "doc-202354",
+                "doc-82104946",
+                "doc-48361",
+                "doc-294894",
+                "doc-3607937"
+              ],
+              "precision": 0.4,
+              "recall": 0.6666666666666666,
+              "f1": 0.5,
+              "hits": 4,
+              "ndcg": 0.7114533439819829
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-46265417",
+                "doc-16642",
+                "doc-10568",
+                "doc-202354",
+                "doc-71707207",
+                "doc-173070",
+                "doc-149333",
+                "doc-51274655",
+                "doc-48361",
+                "doc-909036"
+              ],
+              "precision": 0.4,
+              "recall": 0.4444444444444444,
+              "f1": 0.4210526315789474,
+              "hits": 4,
+              "ndcg": 0.402022970539019
+            }
+          ]
+        }
+      },
+      "target_positions": {
+        "tfidf": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 45,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.0048666743811173006,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.0
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "pagerank": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 15,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.010180727282529596,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.010180727282529596
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "tspr": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 5,
+            "in_top_k": true,
+            "relevant": false,
+            "score": 0.03232009285418264,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.03232009285418264
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "hybrid": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 35,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.02627296035978863,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.03232009285418264
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ]
+      },
+      "weight_sweep": [
+        {
+          "lexical_weight": 0.0,
+          "macro_precision": 0.36,
+          "macro_recall": 0.5308080808080808,
+          "macro_f1": 0.41066448171711334,
+          "macro_ndcg": 0.4538838043463634
+        },
+        {
+          "lexical_weight": 0.5,
+          "macro_precision": 0.4800000000000001,
+          "macro_recall": 0.7331565656565656,
+          "macro_f1": 0.5544892680418998,
+          "macro_ndcg": 0.6244943586612091
+        },
+        {
+          "lexical_weight": 0.7,
+          "macro_precision": 0.51,
+          "macro_recall": 0.8031565656565656,
+          "macro_f1": 0.5963940299466616,
+          "macro_ndcg": 0.7073828315566281
+        },
+        {
+          "lexical_weight": 0.85,
+          "macro_precision": 0.55,
+          "macro_recall": 0.8622474747474748,
+          "macro_f1": 0.643417839470471,
+          "macro_ndcg": 0.8205054052196005
+        },
+        {
+          "lexical_weight": 0.9,
+          "macro_precision": 0.5600000000000002,
+          "macro_recall": 0.8747474747474747,
+          "macro_f1": 0.6545289505815822,
+          "macro_ndcg": 0.8788480997372057
+        },
+        {
+          "lexical_weight": 0.95,
+          "macro_precision": 0.5900000000000001,
+          "macro_recall": 0.9136363636363637,
+          "macro_f1": 0.6880815821605296,
+          "macro_ndcg": 0.9111177357745749
+        },
+        {
+          "lexical_weight": 1.0,
+          "macro_precision": 0.6,
+          "macro_recall": 0.9227272727272726,
+          "macro_f1": 0.6976053916843391,
+          "macro_ndcg": 0.9301359888389099
+        }
+      ]
+    },
+    "attacked": {
+      "documents": 172,
+      "internal_links": 725,
+      "vocabulary": 8703,
+      "tfidf_nonzeros": 29799,
+      "build_seconds_excluding_imports": 2.1956819000006362,
+      "convergence": {
+        "global": {
+          "iterations": 86,
+          "max_change": 8.536266360437139e-09,
+          "converged": true
+        },
+        "topics": {
+          "technology": {
+            "iterations": 46,
+            "max_change": 9.522783353532738e-09,
+            "converged": true
+          },
+          "science": {
+            "iterations": 94,
+            "max_change": 8.539867049628391e-09,
+            "converged": true
+          },
+          "health_and_medicine": {
+            "iterations": 46,
+            "max_change": 9.747135848447996e-09,
+            "converged": true
+          },
+          "sports": {
+            "iterations": 63,
+            "max_change": 8.31115065658139e-09,
+            "converged": true
+          },
+          "politics": {
+            "iterations": 55,
+            "max_change": 8.917773269834228e-09,
+            "converged": true
+          }
+        }
+      },
+      "global_target_score": 0.02178762246382941,
+      "topic_target_score": 0.06621585766101284,
+      "systems": {
+        "tfidf": {
+          "macro_precision": 0.6,
+          "macro_recall": 0.9227272727272726,
+          "macro_f1": 0.6976053916843391,
+          "macro_ndcg": 0.9301359888389099,
+          "mean_query_ms": 0.6176839999109992,
+          "median_query_ms": 0.6146000005173846,
+          "p95_query_ms": 0.884939999832568,
+          "peak_traced_mib": 15.76088809967041,
+          "instrumented_load_seconds": 0.4255671999999322,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1164",
+                "doc-1167455",
+                "doc-58714104",
+                "doc-48795986",
+                "doc-74329563",
+                "doc-71642695",
+                "doc-21391751",
+                "doc-203619",
+                "doc-79558416",
+                "doc-1706303"
+              ],
+              "precision": 0.9,
+              "recall": 0.8181818181818182,
+              "f1": 0.8571428571428572,
+              "hits": 9,
+              "ndcg": 0.9148568823583791
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-34655748",
+                "doc-18421258",
+                "doc-72557062",
+                "doc-48795986",
+                "doc-43037442",
+                "doc-58714104",
+                "doc-79558416",
+                "doc-909036",
+                "doc-805870",
+                "doc-29331027"
+              ],
+              "precision": 0.3,
+              "recall": 1.0,
+              "f1": 0.4615384615384615,
+              "hits": 3,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-81649308",
+                "doc-32074177",
+                "doc-8356138",
+                "doc-241033",
+                "doc-21485",
+                "doc-46542792",
+                "doc-3415504",
+                "doc-241029",
+                "doc-23259",
+                "doc-1430548"
+              ],
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.7499999999999999,
+              "hits": 6,
+              "ndcg": 0.9930783166417602
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-1614492",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-29564581",
+                "doc-35412202",
+                "doc-202354",
+                "doc-241033",
+                "doc-23259",
+                "doc-709427"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-302755",
+                "doc-40817590",
+                "doc-2052864",
+                "doc-44794841",
+                "doc-6944726",
+                "doc-1432191",
+                "doc-2078908",
+                "doc-1548205",
+                "doc-59171",
+                "doc-22555940"
+              ],
+              "precision": 1.0,
+              "recall": 0.9090909090909091,
+              "f1": 0.9523809523809523,
+              "hits": 10,
+              "ndcg": 1.0000000000000002
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-684811",
+                "doc-2933134",
+                "doc-649760",
+                "doc-40817590",
+                "doc-228845",
+                "doc-3820402",
+                "doc-44794841",
+                "doc-48395"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.975788054854922
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-5376102",
+                "doc-14481060",
+                "doc-40808598",
+                "doc-11370",
+                "doc-2327685",
+                "doc-72279931",
+                "doc-157232",
+                "doc-9904",
+                "doc-35499845",
+                "doc-70432805"
+              ],
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.888888888888889,
+              "hits": 8,
+              "ndcg": 0.9933222998814618
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-35499845",
+                "doc-21644506",
+                "doc-20897682",
+                "doc-38414023",
+                "doc-50606739",
+                "doc-535879",
+                "doc-10568",
+                "doc-398110",
+                "doc-6399700",
+                "doc-2111524"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-43037442",
+                "doc-38065993",
+                "doc-4028762",
+                "doc-82104946",
+                "doc-71707207",
+                "doc-243062",
+                "doc-16642",
+                "doc-4515987",
+                "doc-15444835",
+                "doc-3607937"
+              ],
+              "precision": 0.5,
+              "recall": 0.8333333333333334,
+              "f1": 0.625,
+              "hits": 5,
+              "ndcg": 0.892210845475489
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-46265417",
+                "doc-71707207",
+                "doc-149333",
+                "doc-217450",
+                "doc-3607937",
+                "doc-16642",
+                "doc-909036",
+                "doc-38065993",
+                "doc-202354",
+                "doc-9646367"
+              ],
+              "precision": 0.6,
+              "recall": 0.6666666666666666,
+              "f1": 0.631578947368421,
+              "hits": 6,
+              "ndcg": 0.5321034891770867
+            }
+          ]
+        },
+        "pagerank": {
+          "macro_precision": 0.22000000000000003,
+          "macro_recall": 0.29401515151515156,
+          "macro_f1": 0.2418253968253968,
+          "macro_ndcg": 0.261079950379585,
+          "mean_query_ms": 0.654489666679486,
+          "median_query_ms": 0.6099499996707891,
+          "p95_query_ms": 1.021224999021797,
+          "peak_traced_mib": 15.759038925170898,
+          "instrumented_load_seconds": 0.38484909999897354,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-1167455",
+                "doc-18879",
+                "doc-74329563",
+                "doc-58714104",
+                "doc-71642695",
+                "doc-21485"
+              ],
+              "precision": 0.6,
+              "recall": 0.5454545454545454,
+              "f1": 0.5714285714285713,
+              "hits": 6,
+              "ndcg": 0.5645252544249328
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-294894",
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-35412202",
+                "doc-18879",
+                "doc-58714104",
+                "doc-23862",
+                "doc-203619"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-367654",
+                "doc-406804",
+                "doc-257243",
+                "doc-241029",
+                "doc-50606739",
+                "doc-46542792"
+              ],
+              "precision": 0.2,
+              "recall": 0.3333333333333333,
+              "f1": 0.25,
+              "hits": 2,
+              "ndcg": 0.3422220729283414
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-325806",
+                "doc-35412202",
+                "doc-23259",
+                "doc-21485",
+                "doc-1706303",
+                "doc-241033",
+                "doc-1430548",
+                "doc-257243",
+                "doc-241029"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.24630238874073
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1548205",
+                "doc-32653",
+                "doc-649760",
+                "doc-210242",
+                "doc-44794841",
+                "doc-1432191",
+                "doc-59171",
+                "doc-2052864",
+                "doc-2859941",
+                "doc-2078908"
+              ],
+              "precision": 0.7,
+              "recall": 0.6363636363636364,
+              "f1": 0.6666666666666666,
+              "hits": 7,
+              "ndcg": 0.6563033086078547
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-18993825",
+                "doc-48395",
+                "doc-649760",
+                "doc-3702720",
+                "doc-12514534",
+                "doc-44794841",
+                "doc-684811",
+                "doc-2933134",
+                "doc-1432191",
+                "doc-59171"
+              ],
+              "precision": 0.4,
+              "recall": 0.8,
+              "f1": 0.5333333333333333,
+              "hits": 4,
+              "ndcg": 0.4973199614801841
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-31524",
+                "doc-38414023",
+                "doc-193513",
+                "doc-243062",
+                "doc-48795986",
+                "doc-1167455"
+              ],
+              "precision": 0.1,
+              "recall": 0.125,
+              "f1": 0.11111111111111112,
+              "hits": 1,
+              "ndcg": 0.1089364926177559
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-57813319",
+                "doc-2111524",
+                "doc-157232",
+                "doc-58714104",
+                "doc-41081316",
+                "doc-75983123",
+                "doc-26349067"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.19519002499605084
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-243062",
+                "doc-13745451",
+                "doc-48361",
+                "doc-58714104",
+                "doc-41081316",
+                "doc-9431528"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-173070",
+                "doc-294894",
+                "doc-909036",
+                "doc-11370",
+                "doc-1164",
+                "doc-38414023",
+                "doc-193513",
+                "doc-243062",
+                "doc-48795986"
+              ],
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "hits": 0,
+              "ndcg": 0.0
+            }
+          ]
+        },
+        "tspr": {
+          "macro_precision": 0.36,
+          "macro_recall": 0.5308080808080808,
+          "macro_f1": 0.41066448171711334,
+          "macro_ndcg": 0.45200015594982457,
+          "mean_query_ms": 0.8885980000316825,
+          "median_query_ms": 0.8604499998909887,
+          "p95_query_ms": 1.3361149990487322,
+          "peak_traced_mib": 15.759095191955566,
+          "instrumented_load_seconds": 0.34643230000074254,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-1167455",
+                "doc-48795986",
+                "doc-58714104",
+                "doc-71642695",
+                "doc-74329563",
+                "doc-1706303",
+                "doc-203619"
+              ],
+              "precision": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762,
+              "hits": 8,
+              "ndcg": 0.7104770117651427
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-294894",
+                "doc-909036",
+                "doc-1164",
+                "doc-73248112",
+                "doc-48795986",
+                "doc-23862",
+                "doc-58714104",
+                "doc-35412202",
+                "doc-203619",
+                "doc-18421258"
+              ],
+              "precision": 0.1,
+              "recall": 0.3333333333333333,
+              "f1": 0.15384615384615383,
+              "hits": 1,
+              "ndcg": 0.13565197343244778
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-367654",
+                "doc-257243",
+                "doc-241029",
+                "doc-46542792",
+                "doc-147853",
+                "doc-8356138"
+              ],
+              "precision": 0.3,
+              "recall": 0.5,
+              "f1": 0.37499999999999994,
+              "hits": 3,
+              "ndcg": 0.4296937870297496
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-1430548",
+                "doc-257243",
+                "doc-241029",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-1614492"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 0.7438924904678291
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1548205",
+                "doc-32653",
+                "doc-44794841",
+                "doc-210242",
+                "doc-649760",
+                "doc-1432191",
+                "doc-2052864",
+                "doc-2859941",
+                "doc-2078908",
+                "doc-59171"
+              ],
+              "precision": 0.7,
+              "recall": 0.6363636363636364,
+              "f1": 0.6666666666666666,
+              "hits": 7,
+              "ndcg": 0.6812060741152738
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-44794841",
+                "doc-684811",
+                "doc-649760",
+                "doc-2933134",
+                "doc-1432191",
+                "doc-59171",
+                "doc-228845",
+                "doc-3820402"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.9180654083817015
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-31524",
+                "doc-38414023",
+                "doc-57813319",
+                "doc-157232",
+                "doc-41081316",
+                "doc-75983123",
+                "doc-26349067",
+                "doc-9431528"
+              ],
+              "precision": 0.2,
+              "recall": 0.25,
+              "f1": 0.22222222222222224,
+              "hits": 2,
+              "ndcg": 0.24968908577726404
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-11370",
+                "doc-38414023",
+                "doc-57813319",
+                "doc-2111524",
+                "doc-157232",
+                "doc-41081316",
+                "doc-75983123",
+                "doc-26349067",
+                "doc-9431528"
+              ],
+              "precision": 0.1,
+              "recall": 0.25,
+              "f1": 0.14285714285714288,
+              "hits": 1,
+              "ndcg": 0.19519002499605084
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-10568",
+                "doc-202354",
+                "doc-48361",
+                "doc-16642",
+                "doc-294894",
+                "doc-909036",
+                "doc-3607937",
+                "doc-11370",
+                "doc-3111840",
+                "doc-3872186"
+              ],
+              "precision": 0.1,
+              "recall": 0.16666666666666666,
+              "f1": 0.125,
+              "hits": 1,
+              "ndcg": 0.09109240322345806
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-173070",
+                "doc-10568",
+                "doc-51274655",
+                "doc-202354",
+                "doc-19312285",
+                "doc-48361",
+                "doc-16642",
+                "doc-294894",
+                "doc-60076284",
+                "doc-5058739"
+              ],
+              "precision": 0.4,
+              "recall": 0.4444444444444444,
+              "f1": 0.4210526315789474,
+              "hits": 4,
+              "ndcg": 0.3650433003093288
+            }
+          ]
+        },
+        "hybrid": {
+          "macro_precision": 0.5600000000000002,
+          "macro_recall": 0.8747474747474747,
+          "macro_f1": 0.6545289505815822,
+          "macro_ndcg": 0.8788480997372057,
+          "mean_query_ms": 0.8098533333577507,
+          "median_query_ms": 0.7866500000091037,
+          "p95_query_ms": 1.2078799984919897,
+          "peak_traced_mib": 15.759095191955566,
+          "instrumented_load_seconds": 0.35179750000133936,
+          "per_query": [
+            {
+              "id": "Q01",
+              "query": "artificial intelligence learning",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-1164",
+                "doc-1167455",
+                "doc-58714104",
+                "doc-48795986",
+                "doc-74329563",
+                "doc-909036",
+                "doc-71642695",
+                "doc-73248112",
+                "doc-203619",
+                "doc-1706303"
+              ],
+              "precision": 0.8,
+              "recall": 0.7272727272727273,
+              "f1": 0.761904761904762,
+              "hits": 8,
+              "ndcg": 0.836458613379704
+            },
+            {
+              "id": "Q02",
+              "query": "venture capital software investment",
+              "relevant_count": 3,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-34655748",
+                "doc-18421258",
+                "doc-72557062",
+                "doc-294894",
+                "doc-909036",
+                "doc-48795986",
+                "doc-58714104",
+                "doc-73248112",
+                "doc-1164",
+                "doc-79558416"
+              ],
+              "precision": 0.3,
+              "recall": 1.0,
+              "f1": 0.4615384615384615,
+              "hits": 3,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q03",
+              "query": "neutrino detector experiment",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-81649308",
+                "doc-21485",
+                "doc-32074177",
+                "doc-241033",
+                "doc-8356138",
+                "doc-46542792",
+                "doc-23259",
+                "doc-3415504",
+                "doc-241029",
+                "doc-1430548"
+              ],
+              "precision": 0.6,
+              "recall": 1.0,
+              "f1": 0.7499999999999999,
+              "hits": 6,
+              "ndcg": 0.9876712785649564
+            },
+            {
+              "id": "Q04",
+              "query": "graph theory vertices edges",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-325806",
+                "doc-1614492",
+                "doc-2856852",
+                "doc-24673785",
+                "doc-23259",
+                "doc-21485",
+                "doc-241033",
+                "doc-29564581",
+                "doc-1430548",
+                "doc-257243"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 1.0
+            },
+            {
+              "id": "Q05",
+              "query": "viral infection fever",
+              "relevant_count": 11,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-302755",
+                "doc-40817590",
+                "doc-2052864",
+                "doc-44794841",
+                "doc-6944726",
+                "doc-1432191",
+                "doc-2078908",
+                "doc-1548205",
+                "doc-59171",
+                "doc-22555940"
+              ],
+              "precision": 1.0,
+              "recall": 0.9090909090909091,
+              "f1": 0.9523809523809523,
+              "hits": 10,
+              "ndcg": 1.0000000000000002
+            },
+            {
+              "id": "Q06",
+              "query": "blood bleeding clotting",
+              "relevant_count": 5,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-3702720",
+                "doc-12514534",
+                "doc-684811",
+                "doc-2933134",
+                "doc-649760",
+                "doc-40817590",
+                "doc-228845",
+                "doc-44794841",
+                "doc-3820402",
+                "doc-1432191"
+              ],
+              "precision": 0.5,
+              "recall": 1.0,
+              "f1": 0.6666666666666666,
+              "hits": 5,
+              "ndcg": 0.9708923176105698
+            },
+            {
+              "id": "Q07",
+              "query": "FIFA World Cup tournament seeding",
+              "relevant_count": 8,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-5376102",
+                "doc-14481060",
+                "doc-40808598",
+                "doc-11370",
+                "doc-10568",
+                "doc-2327685",
+                "doc-72279931",
+                "doc-157232",
+                "doc-9904",
+                "doc-70432805"
+              ],
+              "precision": 0.8,
+              "recall": 1.0,
+              "f1": 0.888888888888889,
+              "hits": 8,
+              "ndcg": 0.9752652438087496
+            },
+            {
+              "id": "Q08",
+              "query": "women football players",
+              "relevant_count": 4,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-35499845",
+                "doc-10568",
+                "doc-38414023",
+                "doc-21644506",
+                "doc-20897682",
+                "doc-50606739",
+                "doc-2111524",
+                "doc-11370",
+                "doc-535879",
+                "doc-398110"
+              ],
+              "precision": 0.4,
+              "recall": 1.0,
+              "f1": 0.5714285714285715,
+              "hits": 4,
+              "ndcg": 0.9047172294870751
+            },
+            {
+              "id": "Q09",
+              "query": "international diplomatic cooperation",
+              "relevant_count": 6,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-43037442",
+                "doc-38065993",
+                "doc-16642",
+                "doc-10568",
+                "doc-4028762",
+                "doc-202354",
+                "doc-82104946",
+                "doc-48361",
+                "doc-294894",
+                "doc-3607937"
+              ],
+              "precision": 0.4,
+              "recall": 0.6666666666666666,
+              "f1": 0.5,
+              "hits": 4,
+              "ndcg": 0.7114533439819829
+            },
+            {
+              "id": "Q10",
+              "query": "state government political system",
+              "relevant_count": 9,
+              "returned_count": 10,
+              "retrieved": [
+                "doc-46265417",
+                "doc-16642",
+                "doc-10568",
+                "doc-202354",
+                "doc-71707207",
+                "doc-173070",
+                "doc-149333",
+                "doc-51274655",
+                "doc-48361",
+                "doc-909036"
+              ],
+              "precision": 0.4,
+              "recall": 0.4444444444444444,
+              "f1": 0.4210526315789474,
+              "hits": 4,
+              "ndcg": 0.402022970539019
+            }
+          ]
+        }
+      },
+      "target_positions": {
+        "tfidf": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 45,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.0048666743811173006,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.0
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "pagerank": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 5,
+            "in_top_k": true,
+            "relevant": false,
+            "score": 0.02178762246382941,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.02178762246382941
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "tspr": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 3,
+            "in_top_k": true,
+            "relevant": false,
+            "score": 0.06621532560558915,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.06621532560558915
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ],
+        "hybrid": [
+          {
+            "query_id": "Q01",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q02",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q03",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q04",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q05",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q06",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q07",
+            "rank": 28,
+            "in_top_k": false,
+            "relevant": false,
+            "score": 0.042051213765416595,
+            "cosine": 0.0048666743811173006,
+            "link_score": 0.06621532560558915
+          },
+          {
+            "query_id": "Q08",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q09",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          },
+          {
+            "query_id": "Q10",
+            "rank": null,
+            "in_top_k": false,
+            "relevant": false,
+            "score": null,
+            "cosine": null,
+            "link_score": null
+          }
+        ]
+      },
+      "weight_sweep": [
+        {
+          "lexical_weight": 0.0,
+          "macro_precision": 0.36,
+          "macro_recall": 0.5308080808080808,
+          "macro_f1": 0.41066448171711334,
+          "macro_ndcg": 0.45200015594982457
+        },
+        {
+          "lexical_weight": 0.5,
+          "macro_precision": 0.47000000000000003,
+          "macro_recall": 0.7206565656565657,
+          "macro_f1": 0.5433781569307885,
+          "macro_ndcg": 0.6150997034984839
+        },
+        {
+          "lexical_weight": 0.7,
+          "macro_precision": 0.51,
+          "macro_recall": 0.8031565656565656,
+          "macro_f1": 0.5963940299466616,
+          "macro_ndcg": 0.7065016038896326
+        },
+        {
+          "lexical_weight": 0.85,
+          "macro_precision": 0.55,
+          "macro_recall": 0.8622474747474748,
+          "macro_f1": 0.643417839470471,
+          "macro_ndcg": 0.8183472824449204
+        },
+        {
+          "lexical_weight": 0.9,
+          "macro_precision": 0.5600000000000002,
+          "macro_recall": 0.8747474747474747,
+          "macro_f1": 0.6545289505815822,
+          "macro_ndcg": 0.8788480997372057
+        },
+        {
+          "lexical_weight": 0.95,
+          "macro_precision": 0.58,
+          "macro_recall": 0.9011363636363636,
+          "macro_f1": 0.6769704710494184,
+          "macro_ndcg": 0.9038060519301838
+        },
+        {
+          "lexical_weight": 1.0,
+          "macro_precision": 0.6,
+          "macro_recall": 0.9227272727272726,
+          "macro_f1": 0.6976053916843391,
+          "macro_ndcg": 0.9301359888389099
+        }
+      ]
+    }
+  },
+  "changes": {
+    "clean_to_attacked": {
+      "tfidf": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": 0.0
+      },
+      "pagerank": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": 0.0
+      },
+      "tspr": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": -0.0018836483965388173
+      },
+      "hybrid": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": 0.0
+      }
+    },
+    "control_to_attacked": {
+      "tfidf": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": 0.0
+      },
+      "pagerank": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": 0.0
+      },
+      "tspr": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": -0.0018836483965388173
+      },
+      "hybrid": {
+        "macro_precision": 0.0,
+        "macro_recall": 0.0,
+        "macro_f1": 0.0,
+        "macro_ndcg": 0.0
+      }
+    }
+  },
+  "source_collection_unchanged": true
+}

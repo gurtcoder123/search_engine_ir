@@ -1,0 +1,31 @@
+{
+  "topics": [
+    "technology",
+    "science",
+    "health_and_medicine",
+    "sports",
+    "politics"
+  ],
+  "alpha": 1.0,
+  "priors": [
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2
+  ],
+  "word_totals": [
+    10136,
+    11341,
+    8631,
+    8487,
+    7465
+  ],
+  "doc_counts": [
+    33,
+    44,
+    29,
+    34,
+    22
+  ]
+}

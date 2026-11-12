@@ -1,7 +1,8 @@
 # Measured results - 12 November 2026
 
 Run: project.experiment, target doc-31524 (Triathlon), farm size 10, K=10,
-30 timing repetitions per query. Source: output/attack/summary.json. Labels are
+30 timing repetitions per query. Versioned source: results/attack_summary.json
+(also generated as output/attack/summary.json). Labels are
 provisional assistant-generated development judgments, not independently human
 validated. Relevant sets and query strings match the earlier evaluation.
 
